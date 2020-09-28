@@ -88,6 +88,10 @@ public class WorldGen : MonoBehaviour
                 else if (noiseMap[x, z] == 1)
                 {
                     worldMap[x, z] = Instantiate(walls[0], new Vector3(x, 0, z), Quaternion.identity, this.transform);
+                //crystal wall
+                }else if(noiseMap[x,z] == 2)
+                {
+                    worldMap[x, z] = Instantiate(walls[3], new Vector3(x, 0, z), Quaternion.identity, this.transform);
                 }
                 //ground
                 else
@@ -120,7 +124,12 @@ public class WorldGen : MonoBehaviour
                 if (_noiseMap[x, z] <= groundRange)
                     _noiseMap[x, z] = 0;
                 else
-                    _noiseMap[x, z] = 1;
+                
+                    if (Random.Range(0, 2f) <= chanceCrystal)
+                        _noiseMap[x, z] = 2;
+                    else
+                        _noiseMap[x, z] = 1;
+                
 
             }
         }
@@ -213,14 +222,14 @@ public class WorldGen : MonoBehaviour
 
         return _noiseMap;
     }
-    
+
     private void removeSingleGroundCaves(ref float[,] _noisemap)
     {
         for (int x = 0; x < worldWidth; x++)
         {
             for (int z = 0; z < worldHeight; z++)
             {
-                if(_noisemap[x,z] == 0)
+                if (_noisemap[x, z] == 0)
                 {
                     int walls = 0;
                     if (x > 0)
@@ -228,14 +237,14 @@ public class WorldGen : MonoBehaviour
                             walls++;
 
                     if (z > 0)
-                        if (_noisemap[x, z-1] == 1)
+                        if (_noisemap[x, z - 1] == 1)
                             walls++;
 
-                    if (x < worldWidth-1)
+                    if (x < worldWidth - 1)
                         if (_noisemap[x + 1, z] == 1)
                             walls++;
 
-                    if (z > worldHeight-1)
+                    if (z > worldHeight - 1)
                         if (_noisemap[x, z + 1] == 1)
                             walls++;
 
