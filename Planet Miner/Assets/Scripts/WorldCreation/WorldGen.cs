@@ -98,7 +98,7 @@ public class WorldGen : MonoBehaviour
             }
         }
         //remove single ground caves
-        removeSingleGroundCaves();
+        removeSingleGroundCaves(ref noiseMap);
 
         //remove lonely walls
         removeSingleWalls(ref worldMap);
@@ -214,26 +214,35 @@ public class WorldGen : MonoBehaviour
 
         return _noiseMap;
     }
-    //CHANGE FUNCTION TO USE THE NOISE MAP TO AVOID USING INSTANTIATE
-    private void removeSingleGroundCaves()
+    
+    private void removeSingleGroundCaves(ref float[,] _noisemap)
     {
         for (int x = 0; x < worldWidth; x++)
         {
             for (int z = 0; z < worldHeight; z++)
             {
-                Ground g;
-                if (worldMap[x, z].TryGetComponent<Ground>(out g))
+                if(_noisemap[x,z] == 0)
                 {
-                    g.setNeighbours((findNeighbours(worldMap, x, z)));
+                    int walls = 0;
+                    if (x > 0)
+                        if (_noisemap[x - 1, z] == 1)
+                            walls++;
 
-                    if (g.leftNeighbour != null && g.rightNeighbour != null && g.upNeighbour != null && g.downNeighbour != null)
-                    {
-                        if (g.leftNeighbour.CompareTag("Wall") && g.rightNeighbour.CompareTag("Wall") && g.upNeighbour.CompareTag("Wall") && g.downNeighbour.CompareTag("Wall"))
-                        {
-                            Destroy(g.gameObject);
-                            worldMap[x, z] = Instantiate(walls[0], new Vector3(x, 0, z), Quaternion.identity, this.transform);
-                        }
-                    }
+                    if (z > 0)
+                        if (_noisemap[x, z-1] == 1)
+                            walls++;
+
+                    if (x < worldWidth-1)
+                        if (_noisemap[x + 1, z] == 1)
+                            walls++;
+
+                    if (z > worldHeight-1)
+                        if (_noisemap[x, z + 1] == 1)
+                            walls++;
+
+                    //if all sides are walls replace ground with wall
+                    if (walls == 4)
+                        _noisemap[x, z] = 1;
                 }
             }
         }
