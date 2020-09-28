@@ -24,11 +24,10 @@ public class WorldGen : MonoBehaviour
     public float groundRange;
 
     [Space()]
-    [Header("Spawn % for resources")]
+    [Header("Spawn chance for crystals")]
     [Range(0, 1)]
     public float chanceCrystal = 0f;
-    [Range(0, 1)]
-    public float chanceOre = 0f;
+
 
 
     private void Start()
