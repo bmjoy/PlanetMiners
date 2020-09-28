@@ -32,21 +32,20 @@ public class WorldGen : MonoBehaviour
 
     private void Start()
     {
-        worldMap = new GameObject[worldWidth, worldHeight];
+        
+        generateWorld();
     }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            clearWorld();
-            generateWorld();
-        }
-    }
-
 
     public void generateWorld()
     {
+        offsetX = Random.Range(0, 1000);
+        offsetZ = Random.Range(0, 1000);
+
+        worldWidth = PlayerPrefs.GetInt("WorldWidth");
+        worldHeight = PlayerPrefs.GetInt("WorldHeight");
+
+        worldMap = new GameObject[worldWidth, worldHeight];
+
         noiseMap = GeneratePerlinMap.generateMap(worldWidth, worldHeight, scale, offsetX, offsetZ);
 
         noiseMap = convertNoiseMapToWorld(noiseMap);
