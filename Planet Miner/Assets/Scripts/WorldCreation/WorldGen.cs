@@ -28,9 +28,6 @@ public class WorldGen : MonoBehaviour
     [Range(0, 1)]
     public float chanceCrystal = 0f;
 
-    [Header("Pathfinder Object")]
-    public Graphway graphway;
-
     private void Start()
     {
         
@@ -551,28 +548,7 @@ public class WorldGen : MonoBehaviour
 
     private void setupPathfinding(ref GameObject[,] worldMap)
     {
-        int nodeIndex = 0;
-        foreach(GameObject g in worldMap)
-        {
-            if (g.CompareTag("Ground"))
-            {
-                Vector3 nodePos = g.transform.position;
-                nodePos.y += .1f;
-                GwNode gwNode = new GwNode(nodeIndex, nodePos);
-
-                graphway.nodes.Add(nodeIndex, gwNode);
-
-                if(nodeIndex > 0)
-                {
-                    graphway.nodes[nodeIndex].AddConnection(nodeIndex - 1, false, 1, null);
-
-                    graphway.nodes[nodeIndex-1].AddConnection(nodeIndex, false, 1, null);
-                }
-
-                nodeIndex++;
-
-            }
-        }
+        
     }
 
     void clearWorld()
