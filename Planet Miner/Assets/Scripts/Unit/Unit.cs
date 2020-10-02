@@ -2,22 +2,56 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Unit : MonoBehaviour, IStateMachine
+public class Unit : MonoBehaviour
 {
-    private State _state;
+    private void Start()
+    {
 
-    public State getState => _state;
-
-    public State changeState { set => _state = value; }
+    }
 
     private void Update()
     {
-        _state.excecute(this);
+        if (Input.GetMouseButtonDown(0))
+        {
+            RaycastHit hit;
+            Node nodeEnd;
+            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit))
+            {
+                if (hit.transform.TryGetComponent<Node>(out nodeEnd))
+                {
+
+                    Node nodeStart;
+                    if (Physics.Raycast(transform.position, Vector3.down, out hit))
+                    {
+                        if (hit.transform.TryGetComponent<Node>(out nodeStart))
+                        {
+                            StartCoroutine(walkPath(nodeStart, nodeEnd));
+                        }
+                    }
+                }
+            }
+        }
     }
 
-
-    private void move(Vector3 screenSpace)
+    IEnumerator walkPath(Node start, Node goal)
     {
-        
+        List<Vector3> path = Pathfinding.findPath(start, goal);
+
+        Vector3 current = path[0];
+        int index = 0;
+
+        while (index < path.Count)
+        {
+            current = path[index];
+            yield return new WaitForSeconds(.25f);
+
+            this.transform.position = Vector3.MoveTowards(transform.position, current, .25f);
+
+            if (transform.position.Equals(current))
+                index++;
+
+        }
     }
+
+
 }

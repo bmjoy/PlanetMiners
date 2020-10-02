@@ -19,6 +19,10 @@ public class WorldGen : MonoBehaviour
     public GameObject[] walls;
     public GameObject[] ground;
 
+    public GameObject unit;
+
+    public Pathfinding pathfinding;
+
     [Header("Spawn Range Terrain")]
     [Range(0, 1f)]
     public float groundRange;
@@ -47,6 +51,8 @@ public class WorldGen : MonoBehaviour
         noiseMap = GeneratePerlinMap.generateMap(worldWidth, worldHeight, scale, offsetX, offsetZ);
 
         noiseMap = convertNoiseMapToWorld(noiseMap);
+
+        int unitcount = 0;
         //generate base walls and floors
         for (int x = 0; x < worldWidth; x++)
         {
@@ -94,6 +100,15 @@ public class WorldGen : MonoBehaviour
                 else
                 {
                     worldMap[x, z] = Instantiate(ground[0], new Vector3(x, 0, z), Quaternion.identity, this.transform);
+                    worldMap[x, z].name = "Ground" + x + "," + z;
+                    pathfinding.addNode(worldMap[x, z].GetComponent<Node>());
+
+                    //TEMP
+                    if(unitcount == 0)
+                    {
+                        Instantiate(unit, new Vector3(x, 1, z), Quaternion.identity, this.transform);
+                        unitcount++;
+                    }
                 }
             }
         }
