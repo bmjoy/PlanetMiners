@@ -4,6 +4,15 @@ using UnityEngine;
 
 public class Unit : MonoBehaviour
 {
+    [SerializeField]
+    private float _moveSpeed = .5f;
+
+    private State state = null;
+
+    public float moveSpeed
+    {
+        get { return _moveSpeed * Time.deltaTime;}
+    }
     private void Start()
     {
 
@@ -25,33 +34,23 @@ public class Unit : MonoBehaviour
                     {
                         if (hit.transform.TryGetComponent<Node>(out nodeStart))
                         {
-                            StartCoroutine(walkPath(nodeStart, nodeEnd));
+                            changeState(new Walking(nodeStart.position, nodeEnd.position,this));
                         }
                     }
                 }
             }
         }
+
+        if (state != null)
+            state.execute();
     }
 
-    IEnumerator walkPath(Node start, Node goal)
+    public void changeState(State state)
     {
-        List<Vector3> path = Pathfinding.findPath(start, goal);
-
-        Vector3 current = path[0];
-        int index = 0;
-
-        while (index < path.Count)
-        {
-            current = path[index];
-            yield return new WaitForSeconds(.25f);
-
-            this.transform.position = Vector3.MoveTowards(transform.position, current, .25f);
-
-            if (transform.position.Equals(current))
-                index++;
-
-        }
+        this.state = state;
     }
+
+    
 
 
 }

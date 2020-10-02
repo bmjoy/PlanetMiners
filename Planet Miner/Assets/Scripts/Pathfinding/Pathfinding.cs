@@ -20,9 +20,21 @@ public class Pathfinding : MonoBehaviour
         nodeMap.Add(node);
     }
 
-    public static List<Vector3> findPath(Node start, Node goal)
+    private static Node getNodeByPosition(Vector3 nodePos)
     {
-        if (!nodeMap.Contains(start) || !nodeMap.Contains(goal) || start == null || goal == null)
+        foreach (Node node in nodeMap)
+            if (node.transform.position == nodePos)
+                return node;
+
+        return null;
+    }
+
+    public static List<Vector3> findPath(Vector3 startPos,Vector3 endPos)
+    {
+        Node start = getNodeByPosition(startPos);
+        Node goal = getNodeByPosition(endPos);
+
+        if (start == null || goal == null)
             return null;
         //a* initializing
         Debug.Log("Start pathfind");
