@@ -86,7 +86,7 @@ public class Node : MonoBehaviour
         get => transform.position;
     }
 
-    private void OnDrawGizmos()
+    /*private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawCube(position, new Vector3(.5f, 1f, .5f));
@@ -142,5 +142,5 @@ public class Node : MonoBehaviour
 
 
         }
-    }
+    }*/
 }

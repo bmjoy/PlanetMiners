@@ -53,7 +53,9 @@ MonoBehaviour:
   - {fileID: 7996783547204959933, guid: 517a2775f83d8d54caed1810333b2b54, type: 3}
   - {fileID: 6255994467239245480, guid: 58f094f1dca2d2842b93d617ab974758, type: 3}
   - {fileID: 474285479570617044, guid: 3a38a893f2442cd4d9458a7230617089, type: 3}
-  ground:
+  grounds:
   - {fileID: 7594225892198606713, guid: 13717b932ce65df4eb3fd698a944c802, type: 3}
+  unit: {fileID: 0}
+  pathfinding: {fileID: 0}
   groundRange: 0.3
   chanceCrystal: 0.1

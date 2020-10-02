@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5590479268895750897}
   - component: {fileID: 2209532584428078600}
   - component: {fileID: 2769471344474618084}
+  - component: {fileID: 1278066246556068651}
   m_Layer: 9
   m_Name: TunnelWall
   m_TagString: Wall
@@ -92,3 +93,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a90deced9241054fab551e71ba2c6d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!65 &1278066246556068651
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 474285479570617044}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.5, y: 0.5000001, z: 1}
+  m_Center: {x: 0, y: 0.25000006, z: -0.0010526031}

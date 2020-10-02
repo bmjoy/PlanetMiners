@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Wall : WorldBlock
+public class Idle : State
 {
-    private void Start()
+    public override void execute()
     {
-        health = 5;
+        //play idle animation
     }
 }

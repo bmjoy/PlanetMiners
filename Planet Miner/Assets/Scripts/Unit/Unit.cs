@@ -5,13 +5,15 @@ using UnityEngine;
 public class Unit : MonoBehaviour
 {
     [SerializeField]
-    private float _moveSpeed = .5f;
+    private float _moveSpeed = 5f;
 
     private State state = null;
 
+    GameObject walltarget;
+
     public float moveSpeed
     {
-        get { return _moveSpeed * Time.deltaTime;}
+        get { return _moveSpeed * Time.deltaTime; }
     }
     private void Start()
     {
@@ -23,19 +25,37 @@ public class Unit : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             RaycastHit hit;
-            Node nodeEnd;
+
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit))
             {
-                if (hit.transform.TryGetComponent<Node>(out nodeEnd))
-                {
-
-                    Node nodeStart;
+                if (hit.transform.TryGetComponent<Node>(out Node nodeEnd))
+                {                   
                     if (Physics.Raycast(transform.position, Vector3.down, out hit))
                     {
-                        if (hit.transform.TryGetComponent<Node>(out nodeStart))
+                        if (hit.transform.TryGetComponent<Node>(out Node nodeStart))
                         {
-                            changeState(new Walking(nodeStart.position, nodeEnd.position,this));
+                            changeState(new Walking(nodeStart.position, nodeEnd.position, this,null));
                         }
+                    }
+                }
+
+                if(hit.transform.TryGetComponent<Wall>(out Wall wall))
+                {
+                    foreach(GameObject go in wall.neighbours.Values)
+                    {
+                        if(go.TryGetComponent<Node>(out Node endnode))
+                        {
+
+                            if (Physics.Raycast(transform.position, Vector3.down, out hit))
+                            {
+                                if (hit.transform.TryGetComponent<Node>(out Node nodeStart))
+                                {
+                                    changeState(new Walking(nodeStart.position, endnode.position, this,wall));
+                                    break;
+                                }
+                            }
+                        }
+                        
                     }
                 }
             }
@@ -43,6 +63,7 @@ public class Unit : MonoBehaviour
 
         if (state != null)
             state.execute();
+
     }
 
     public void changeState(State state)
@@ -50,7 +71,7 @@ public class Unit : MonoBehaviour
         this.state = state;
     }
 
-    
+
 
 
 }

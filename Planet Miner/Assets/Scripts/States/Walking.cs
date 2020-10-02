@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 public class Walking : State
 {
@@ -8,8 +9,11 @@ public class Walking : State
     private int _pathIndex = 0;
 
     private Unit _unit;
-    public Walking(Vector3 start, Vector3 goal, Unit unit)
+
+    private Wall wall;
+    public Walking(Vector3 start, Vector3 goal, Unit unit,Wall target)
     {
+        wall = target;
         _unit = unit;
         _goal = goal;
         _path = Pathfinding.findPath(start, goal);
@@ -29,7 +33,7 @@ public class Walking : State
         }
         else
         {
-            _unit.changeState(null);
+            _unit.changeState(new Idle());
         }
     }
 }
