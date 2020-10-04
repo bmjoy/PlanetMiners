@@ -4,29 +4,24 @@ using UnityEngine;
 
 public abstract class Task
 {
-    private State _state;
     private Unit _unit;
 
     public Task(Unit unit)
     {
         _unit = unit;
     }
-
-    public State state
+    public Unit unit
     {
-        get => _state;
+        get => _unit;
     }
 
-    public virtual void start()
-    {
-        _unit.changeState(_state);
-    }
+    public abstract void start();
 
     public abstract void execute();
 
     public virtual void end()
     {
-        _state = new Idle();
+        _unit.changeState(new Idle());
     }
 
     public abstract bool isFinished();

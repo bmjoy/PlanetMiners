@@ -37,6 +37,11 @@ public class Unit : MonoBehaviour
         return false;
     }
 
+    public State getState()
+    {
+        return _state;
+    }
+
     public void changeTask(Task task)
     {
         if (task == null)
@@ -58,6 +63,11 @@ public class Unit : MonoBehaviour
     public void changeState(State state)
     {
         _state = state;
+    }
+
+    public bool isAtPosition(Vector3 pos)
+    {
+        return (transform.position == pos);
     }
 
 

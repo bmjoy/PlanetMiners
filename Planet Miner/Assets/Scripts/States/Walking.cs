@@ -9,11 +9,8 @@ public class Walking : State
     private int _pathIndex = 0;
 
     private Unit _unit;
-
-    private Wall wall;
-    public Walking(Vector3 start, Vector3 goal, Unit unit,Wall target)
+    public Walking(Vector3 start, Vector3 goal, Unit unit)
     {
-        wall = target;
         _unit = unit;
         _goal = goal;
         _path = Pathfinding.findPath(start, goal);
