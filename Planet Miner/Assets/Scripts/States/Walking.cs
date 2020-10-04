@@ -19,7 +19,7 @@ public class Walking : State
         _path = Pathfinding.findPath(start, goal);
         _currentGoal = _path[_pathIndex];
     }
-    public override void execute()
+    public override void run()
     {
         if (_pathIndex < _path.Count)
         {

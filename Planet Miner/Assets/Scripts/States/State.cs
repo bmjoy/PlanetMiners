@@ -4,5 +4,5 @@ using UnityEngine;
 
 public abstract class State
 {
-    public abstract void execute();
+    public abstract void run();
 }

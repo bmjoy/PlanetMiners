@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Idle : State
 {
-    public override void execute()
+    public override void run()
     {
         //play idle animation
     }
