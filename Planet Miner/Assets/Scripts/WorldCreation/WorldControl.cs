@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class WorldGen : MonoBehaviour
+public class WorldControl : MonoBehaviour
 {
     [Header("World size")]
     public int worldWidth = 10;

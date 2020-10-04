@@ -6,7 +6,7 @@ public class TaskSystem
 {
     static TaskSystem _instance;
 
-    private static WorldGen worldGen;
+    private static WorldControl worldGen;
 
     private static Queue<Task> globalQueue = new Queue<Task>();
     private TaskSystem()
