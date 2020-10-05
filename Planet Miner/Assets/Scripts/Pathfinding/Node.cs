@@ -9,7 +9,7 @@ public class Node : MonoBehaviour
     //most efficient previous node
     [SerializeField]
     private Node _cameFrom = null;
-    
+
     [SerializeField]
     private int _g = 0;
     [SerializeField]
@@ -29,18 +29,18 @@ public class Node : MonoBehaviour
             _connections.Add(connectTo);
 
     }
-    public void removeConnection(Node n,bool bothSides)
+    public void removeConnection(Node n, bool bothSides)
     {
         connections.Remove(n);
         if (bothSides)
-            n.removeConnection(this,false);
+            n.removeConnection(this, false);
     }
 
     public void removeAllConnections()
     {
-        foreach(Node n in connections)
+        foreach (Node n in connections)
         {
-            n.removeConnection(this,false);
+            n.removeConnection(this, false);
             connections.Remove(n);
         }
     }
@@ -103,6 +103,8 @@ public class Node : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        if (PlayerPrefs.GetInt("Debugging") == 0) return;
+
         Gizmos.color = Color.red;
         Gizmos.DrawCube(position, new Vector3(.5f, 1f, .5f));
 
@@ -110,19 +112,20 @@ public class Node : MonoBehaviour
 
         Vector3 drawpos = position;
         Vector3 drawto;
-        Vector3 arrowOffset = new Vector3(0, 0, 0) ;
-        
+        Vector3 arrowOffset = new Vector3(0, 0, 0);
+
         foreach (Node node in connections)
         {
             drawto = node.position;
             drawpos = position;
             //under
-            if (drawto.z > position.z) {
+            if (drawto.z > position.z)
+            {
 
                 drawpos.x -= .25f;
                 drawto.x -= .25f;
 
-                arrowOffset = new Vector3(.25f,0,-.5f);
+                arrowOffset = new Vector3(.25f, 0, -.5f);
             }
             else
             //over
@@ -130,7 +133,7 @@ public class Node : MonoBehaviour
             {
                 drawpos.x += .25f;
                 drawto.x += .25f;
-         
+
                 arrowOffset = new Vector3(.25f, 0, .5f);
             }
             else
@@ -139,7 +142,7 @@ public class Node : MonoBehaviour
             {
                 drawpos.z += .25f;
                 drawto.z += .25f;
-                arrowOffset = new Vector3(-.5f, 0,.25f);
+                arrowOffset = new Vector3(-.5f, 0, .25f);
             }
             else
             //left
@@ -147,8 +150,8 @@ public class Node : MonoBehaviour
             {
                 drawpos.z -= .25f;
                 drawto.z -= .25f;
-                
-                arrowOffset = new Vector3(.5f, 0,.25f);
+
+                arrowOffset = new Vector3(.5f, 0, .25f);
 
             }
 

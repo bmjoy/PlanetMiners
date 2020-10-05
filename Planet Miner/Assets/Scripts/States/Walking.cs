@@ -14,7 +14,10 @@ public class Walking : State
         _unit = unit;
         _goal = goal;
         _path = Pathfinding.findPath(start, goal);
-        _currentGoal = _path[_pathIndex];
+        if (_path != null)
+            _currentGoal = _path[_pathIndex];
+        else
+            _unit.changeState(new Idle());
     }
     public override void run()
     {
