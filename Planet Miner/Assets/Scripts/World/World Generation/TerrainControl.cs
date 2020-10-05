@@ -124,13 +124,13 @@ public class TerrainControl : MonoBehaviour
         removeSingleWalls(ref worldMap);
 
         //rotate normal walls
-        rotateWallsToGround(ref worldMap);
+        rotateWallsToGround(ref worldMap, 0, 0, worldWidth, worldHeight);
 
         //create normal corners
-        createCorners(ref worldMap);
+        createCorners(ref worldMap, 0, 0, worldWidth, worldHeight);
 
         //create inner corners
-        createInnerCorners(ref worldMap);
+        createInnerCorners(ref worldMap, 0, 0, worldWidth, worldHeight);
     }
     private float[,] convertNoiseMapToWorld(float[,] _noiseMap)
     {
@@ -345,11 +345,11 @@ public class TerrainControl : MonoBehaviour
         }
     }
 
-    private void createCorners(ref GameObject[,] worldmap)
+    private void createCorners(ref GameObject[,] worldmap, int startx, int startz, int endx, int endz)
     {
-        for (int x = 0; x < worldWidth; x++)
+        for (int x = startx; x < endx; x++)
         {
-            for (int z = 0; z < worldHeight; z++)
+            for (int z = startz; z < endz; z++)
             {
                 Ground g;
                 if (worldMap[x, z].TryGetComponent<Ground>(out g))
@@ -405,11 +405,11 @@ public class TerrainControl : MonoBehaviour
         }
     }
 
-    private void createInnerCorners(ref GameObject[,] worldmap)
+    private void createInnerCorners(ref GameObject[,] worldmap, int startx, int startz, int endx, int endz)
     {
-        for (int x = 0; x < worldWidth; x++)
+        for (int x = startx; x < endx; x++)
         {
-            for (int z = 0; z < worldHeight; z++)
+            for (int z = startz; z < endz; z++)
             {
                 Ground g;
                 if (worldMap[x, z].TryGetComponent<Ground>(out g))
@@ -481,11 +481,11 @@ public class TerrainControl : MonoBehaviour
         }
     }
 
-    private void rotateWallsToGround(ref GameObject[,] worldmap)
+    private void rotateWallsToGround(ref GameObject[,] worldmap, int startx, int startz, int endx, int endz)
     {
-        for (int x = 0; x < worldWidth; x++)
+        for (int x = startx; x < endx; x++)
         {
-            for (int z = 0; z < worldHeight; z++)
+            for (int z = startz; z < endz; z++)
             {
                 Ground g;
                 if (worldMap[x, z].TryGetComponent<Ground>(out g))
