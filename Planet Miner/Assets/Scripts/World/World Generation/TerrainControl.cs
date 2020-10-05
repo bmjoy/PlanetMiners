@@ -13,6 +13,8 @@ public class TerrainControl : MonoBehaviour
     public float offsetX = 1;
     public float offsetZ = 1;
 
+    public int startAreaSize = 3;
+
     private GameObject[,] worldMap;
     private float[,] noiseMap;
 
@@ -103,17 +105,20 @@ public class TerrainControl : MonoBehaviour
                     worldMap[x, z] = Instantiate(walls[3], new Vector3(x, 0, z), Quaternion.identity, this.transform);
                 }
                 //ground
-                else
+                else if (noiseMap[x, z] == 0)
                 {
                     worldMap[x, z] = Instantiate(grounds[0], new Vector3(x, 0, z), Quaternion.identity, this.transform);
                     worldMap[x, z].name = "Ground" + x + "," + z;
-
+                }
+                else if (noiseMap[x, z] == 3)
+                {
                     //TEMP
-                    if (unitcount == 0)
-                    {
-                        GameObject u = Instantiate(unitPrefab, new Vector3(x, 1, z), Quaternion.identity, this.transform);
-                        unitcount++;
-                    }
+                    worldMap[x, z] = Instantiate(grounds[0], new Vector3(x, 0, z), Quaternion.identity, this.transform);
+                    worldMap[x, z].name = "Ground" + x + "," + z;
+
+                    GameObject u = Instantiate(unitPrefab, new Vector3(x, 1, z), Quaternion.identity, this.transform);
+                    unitcount++;
+
                 }
             }
         }
@@ -134,6 +139,14 @@ public class TerrainControl : MonoBehaviour
     }
     private float[,] convertNoiseMapToWorld(float[,] _noiseMap)
     {
+
+        int centerx, centerz;
+
+        centerx = Mathf.FloorToInt(worldWidth / 2);
+        centerz = Mathf.FloorToInt(worldHeight / 2);
+
+
+
         for (int x = 0; x < worldWidth; x++)
         {
             for (int z = 0; z < worldHeight; z++)
@@ -150,7 +163,7 @@ public class TerrainControl : MonoBehaviour
 
             }
         }
-
+        //force double walls
         for (int x = 0; x < worldWidth; x++)
         {
             for (int z = 0; z < worldHeight; z++)
@@ -234,6 +247,30 @@ public class TerrainControl : MonoBehaviour
                             _noiseMap[x + 2, z - 2] = 1;
                     }
                 }
+            }
+        }
+
+        //insert start area beginning in center
+        for (int x = centerx; x < centerx + startAreaSize + 1; x++)
+        {
+            for (int z = centerz; z < centerz + startAreaSize + 1; z++)
+            {
+                if (x == centerx + (int)startAreaSize / 2 && z == centerz + (int)startAreaSize / 2)
+                    _noiseMap[x, z] = 3;
+                else
+                if (x == centerx)
+                    _noiseMap[x, z] = 1;
+                else
+                if (z == centerz)
+                    _noiseMap[x, z] = 1;
+                else
+                if (x == x + startAreaSize)
+                    _noiseMap[x, z] = 1;
+                else
+                if (z == z + startAreaSize)
+                    _noiseMap[x, z] = 1;
+                else
+                    _noiseMap[x, z] = 0;
             }
         }
 

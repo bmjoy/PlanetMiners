@@ -477,9 +477,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   worldWidth: 10
   worldHeight: 10
-  scale: 1
+  scale: 8
   offsetX: 1
   offsetZ: 1
+  startAreaSize: 10
   walls:
   - {fileID: 474285479570617044, guid: f71c387261872b64392786a8383d5d2c, type: 3}
   - {fileID: 7996783547204959933, guid: 517a2775f83d8d54caed1810333b2b54, type: 3}
