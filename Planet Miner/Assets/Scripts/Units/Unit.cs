@@ -17,13 +17,20 @@ public class Unit : MonoBehaviour
         get { return _moveSpeed * Time.deltaTime; }
     }
 
+
+
+
     private void Update()
     {
+        if (_task == null)
+            return;
+
         _task.execute();
 
         checkTaskFinished();
 
-        _state.run();
+        if (_state != null)
+            _state.run();
     }
 
     private bool checkTaskFinished()
@@ -51,6 +58,7 @@ public class Unit : MonoBehaviour
             _task.end();
 
         _task = task;
+        _task.unit = this;
 
         _task.start();
     }
@@ -67,10 +75,25 @@ public class Unit : MonoBehaviour
 
     public bool isAtPosition(Vector3 pos)
     {
-        return (transform.position == pos);
+        return (transform.position.x == pos.x && transform.position.z == pos.z);
     }
 
+    public void setSelected(bool v)
+    {
+        if (v)
+            selectUnit();
+        else
+            deselectUnit();
+    }
+    private void selectUnit()
+    {
+        transform.rotation = Quaternion.Euler(90, 0, 0);
+    }
 
+    private void deselectUnit()
+    {
+        transform.rotation = Quaternion.Euler(0, 0, 0);
+    }
 
 
 }

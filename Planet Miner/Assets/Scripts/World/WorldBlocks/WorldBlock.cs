@@ -6,7 +6,7 @@ public abstract class WorldBlock : MonoBehaviour
 {
     private float _health = 0;
 
-    protected WorldControl worldGen;
+    protected TerrainControl worldGen;
 
     private Dictionary<string, GameObject> _neighbours = new Dictionary<string, GameObject>();
 
@@ -42,6 +42,6 @@ public abstract class WorldBlock : MonoBehaviour
 
     private void Start()
     {
-        worldGen = FindObjectOfType<WorldControl>();
+        worldGen = FindObjectOfType<TerrainControl>();
     }
 }

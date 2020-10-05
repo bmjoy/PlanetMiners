@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pathfinding : MonoBehaviour
+public class Pathfinding
 {
     private static List<Node> nodeMap = new List<Node>();
 
-    public void addNode(Node node)
+    public static void addNode(Node node)
     {
         node.initialize();
 
@@ -22,6 +22,8 @@ public class Pathfinding : MonoBehaviour
 
     private static Node getNodeByPosition(Vector3 nodePos)
     {
+        nodePos.y = 0;
+
         foreach (Node node in nodeMap)
             if (node.transform.position == nodePos)
                 return node;

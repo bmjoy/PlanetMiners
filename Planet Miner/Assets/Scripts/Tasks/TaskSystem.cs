@@ -4,37 +4,22 @@ using UnityEngine;
 
 public class TaskSystem
 {
-    static TaskSystem _instance;
-
-    private static WorldControl worldGen;
-
-    private static Queue<Task> globalQueue = new Queue<Task>();
-    private TaskSystem()
+    private Queue<Task> globalQueue = new Queue<Task>();
+    public TaskSystem()
     {
 
     }
 
-    public static TaskSystem instance
-    {
-        get
-        {
-            if (_instance == null)
-                _instance = new TaskSystem();
-
-            return _instance;
-        }
-    }
-
-    public static void enqueTask(Task task)
+    public void enqueTask(Task task)
     {
         if (task == null)
             return;
         globalQueue.Enqueue(task);
     }
 
-    public static void asignTasks()
+    public void asignTasks(List<Unit> units)
     {
-        foreach (Unit unit in worldGen.getUnits())
+        foreach (Unit unit in units)
         {
             if (globalQueue.Count > 0 && !unit.hasTask)
                 unit.changeTask(globalQueue.Dequeue());

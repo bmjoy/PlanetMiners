@@ -29,6 +29,21 @@ public class Node : MonoBehaviour
             _connections.Add(connectTo);
 
     }
+    public void removeConnection(Node n,bool bothSides)
+    {
+        connections.Remove(n);
+        if (bothSides)
+            n.removeConnection(this,false);
+    }
+
+    public void removeAllConnections()
+    {
+        foreach(Node n in connections)
+        {
+            n.removeConnection(this,false);
+            connections.Remove(n);
+        }
+    }
 
     public List<Node> connections
     {
@@ -86,7 +101,7 @@ public class Node : MonoBehaviour
         get => transform.position;
     }
 
-    /*private void OnDrawGizmos()
+    private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawCube(position, new Vector3(.5f, 1f, .5f));
@@ -142,5 +157,5 @@ public class Node : MonoBehaviour
 
 
         }
-    }*/
+    }
 }

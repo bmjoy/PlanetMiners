@@ -20,6 +20,6 @@ public class Drilling : State
     {
         _targetWall.doDamage(_drillDamage);
         if (_targetWall.health < 0)
-            GameObject.FindObjectOfType<WorldControl>().replaceWorldObject(_targetWall.gameObject, "Ground");
+            GameObject.FindObjectOfType<TerrainControl>().replaceWorldObject(_targetWall.gameObject, "Ground");
     }
 }

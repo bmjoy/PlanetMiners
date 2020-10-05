@@ -1,0 +1,88 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!181963792 &2655988077585873504
+Preset:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: TerrainControl
+  m_TargetType:
+    m_NativeTypeID: 114
+    m_ManagedTypePPtr: {fileID: 11500000, guid: 901e6ee9d77de2f4fb419b21b3604aa6,
+      type: 3}
+    m_ManagedTypeFallback: 
+  m_Properties:
+  - target: {fileID: 0}
+    propertyPath: m_Enabled
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_EditorHideFlags
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_EditorClassIdentifier
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: worldWidth
+    value: 10
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: worldHeight
+    value: 10
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: scale
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: offsetX
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: offsetZ
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: walls.Array.size
+    value: 3
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: walls.Array.data[0]
+    value: 
+    objectReference: {fileID: 474285479570617044, guid: f71c387261872b64392786a8383d5d2c,
+      type: 3}
+  - target: {fileID: 0}
+    propertyPath: walls.Array.data[1]
+    value: 
+    objectReference: {fileID: 7996783547204959933, guid: 517a2775f83d8d54caed1810333b2b54,
+      type: 3}
+  - target: {fileID: 0}
+    propertyPath: walls.Array.data[2]
+    value: 
+    objectReference: {fileID: 6255994467239245480, guid: 58f094f1dca2d2842b93d617ab974758,
+      type: 3}
+  - target: {fileID: 0}
+    propertyPath: grounds.Array.size
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: grounds.Array.data[0]
+    value: 
+    objectReference: {fileID: 7594225892198606713, guid: 13717b932ce65df4eb3fd698a944c802,
+      type: 3}
+  - target: {fileID: 0}
+    propertyPath: unitPrefab
+    value: 
+    objectReference: {fileID: 6127668985060176437, guid: 43be1a370c6b4e1419390caee2edabb1,
+      type: 3}
+  - target: {fileID: 0}
+    propertyPath: groundRange
+    value: 0.3
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: chanceCrystal
+    value: 0.2
+    objectReference: {fileID: 0}

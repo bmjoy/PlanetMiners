@@ -7,9 +7,10 @@ public class DrillTask : Task
 {
     private Wall _targetWall;
     private Ground _groundNextToWall;
-    public DrillTask(Unit unit, Wall wall) : base(unit)
+    public DrillTask(Wall wall)
     {
         _targetWall = wall;
+        findWallGround();
     }
 
     public override void start()
@@ -35,9 +36,11 @@ public class DrillTask : Task
     {
         foreach (GameObject go in _targetWall.neighbours.Values)
         {
-            if (go.TryGetComponent<Ground>(out Ground g))
+            if (go == null) continue;
+
+            if (go.CompareTag("Ground"))
             {
-                _groundNextToWall = g;
+                _groundNextToWall = go.GetComponent<Ground>();
                 break;
             }
         }
