@@ -163,6 +163,31 @@ public class TerrainControl : MonoBehaviour
 
             }
         }
+
+        //insert start area beginning in center
+        for (int x = centerx; x < centerx + startAreaSize + 1; x++)
+        {
+            for (int z = centerz; z < centerz + startAreaSize + 1; z++)
+            {
+                if (x == centerx + (int)startAreaSize / 2 && z == centerz + (int)startAreaSize / 2)
+                    _noiseMap[x, z] = 3;
+                else
+                if (x == centerx)
+                    _noiseMap[x, z] = 1;
+                else
+                if (z == centerz)
+                    _noiseMap[x, z] = 1;
+                else
+                if (x == x + startAreaSize)
+                    _noiseMap[x, z] = 1;
+                else
+                if (z == z + startAreaSize)
+                    _noiseMap[x, z] = 1;
+                else
+                    _noiseMap[x, z] = 0;
+            }
+        }
+
         //force double walls
         for (int x = 0; x < worldWidth; x++)
         {
@@ -250,29 +275,7 @@ public class TerrainControl : MonoBehaviour
             }
         }
 
-        //insert start area beginning in center
-        for (int x = centerx; x < centerx + startAreaSize + 1; x++)
-        {
-            for (int z = centerz; z < centerz + startAreaSize + 1; z++)
-            {
-                if (x == centerx + (int)startAreaSize / 2 && z == centerz + (int)startAreaSize / 2)
-                    _noiseMap[x, z] = 3;
-                else
-                if (x == centerx)
-                    _noiseMap[x, z] = 1;
-                else
-                if (z == centerz)
-                    _noiseMap[x, z] = 1;
-                else
-                if (x == x + startAreaSize)
-                    _noiseMap[x, z] = 1;
-                else
-                if (z == z + startAreaSize)
-                    _noiseMap[x, z] = 1;
-                else
-                    _noiseMap[x, z] = 0;
-            }
-        }
+        
 
         return _noiseMap;
     }
