@@ -126,7 +126,7 @@ public class TerrainControl : MonoBehaviour
         removeSingleGroundCaves(ref noiseMap);
 
         //remove lonely walls
-        removeSingleWalls(ref worldMap);
+        removeSingleWalls(ref worldMap, 0, 0, worldWidth, worldHeight);
 
         //rotate normal walls
         rotateWallsToGround(ref worldMap, 0, 0, worldWidth, worldHeight);
@@ -312,11 +312,11 @@ public class TerrainControl : MonoBehaviour
             }
         }
     }
-    private void removeSingleWalls(ref GameObject[,] worldmap)
+    private void removeSingleWalls(ref GameObject[,] worldmap, int startx, int startz, int endx, int endz)
     {
-        for (int x = 0; x < worldWidth; x++)
+        for (int x = startx; x < endx; x++)
         {
-            for (int z = 0; z < worldHeight; z++)
+            for (int z = startz; z < endz; z++)
             {
                 Ground g;
                 if (worldMap[x, z].TryGetComponent<Ground>(out g))
@@ -645,6 +645,30 @@ public class TerrainControl : MonoBehaviour
 
         else if (worldMap[replaceX, replaceZ].TryGetComponent<Wall>(out Wall wall))
             wall.setNeighbours(findNeighbours(worldMap, replaceX, replaceZ));
+
+
+        //remove lonely walls
+        removeSingleWalls(ref worldMap, 0, 0, worldWidth, worldHeight);
+
+        //rotate normal walls
+        rotateWallsToGround(ref worldMap, 0, 0, worldWidth, worldHeight);
+
+        //create normal corners
+        createCorners(ref worldMap, 0, 0, worldWidth, worldHeight);
+
+        //create inner corners
+        createInnerCorners(ref worldMap, 0, 0, worldWidth, worldHeight);
+
+        /*removeSingleWalls(ref worldMap, replaceX - 1, replaceZ - 1, replaceX + 1, replaceZ + 1);
+
+        //rotate normal walls
+        rotateWallsToGround(ref worldMap, replaceX - 1, replaceZ - 1, replaceX + 1, replaceZ + 1);
+
+        //create normal corners
+        createCorners(ref worldMap, replaceX - 1, replaceZ - 1, replaceX + 1, replaceZ + 1);
+
+        //create inner corners
+        createInnerCorners(ref worldMap, replaceX - 1, replaceZ - 1, replaceX + 1, replaceZ + 1);*/
     }
 
     public List<Ground> getAllGroundObjects()
