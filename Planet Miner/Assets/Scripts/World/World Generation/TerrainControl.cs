@@ -275,7 +275,7 @@ public class TerrainControl : MonoBehaviour
             }
         }
 
-        
+
 
         return _noiseMap;
     }
@@ -326,7 +326,7 @@ public class TerrainControl : MonoBehaviour
                     g.setNeighbours(neighbours);
 
                     //if ground has wall on left side
-                    if (g.neighbours["left"] != null && g.neighbours["left"].CompareTag("Wall"))
+                    if (g.neighbours["left"] != null && !g.neighbours["left"].CompareTag("Ground") )
                     {
                         Wall w = g.neighbours["left"].GetComponent<Wall>();
                         //find left walls neighbours
@@ -336,11 +336,12 @@ public class TerrainControl : MonoBehaviour
                         {
                             Destroy(w.gameObject);
                             worldmap[x - 1, z] = Instantiate(grounds[0], new Vector3(x - 1, 0, z), Quaternion.identity, this.transform);
+                            Pathfinding.addNode(worldmap[x - 1, z].GetComponent<Node>());
                         }
                     }
 
                     //if ground has wall on right side
-                    if (g.neighbours["right"] != null && g.neighbours["right"].CompareTag("Wall"))
+                    if (g.neighbours["right"] != null && !g.neighbours["right"].CompareTag("Ground"))
                     {
                         Wall w = g.neighbours["right"].GetComponent<Wall>();
                         //find right walls neighbours
@@ -350,11 +351,13 @@ public class TerrainControl : MonoBehaviour
                         {
                             Destroy(w.gameObject);
                             worldmap[x + 1, z] = Instantiate(grounds[0], new Vector3(x + 1, 0, z), Quaternion.identity, this.transform);
+                            Pathfinding.addNode(worldmap[x + 1, z].GetComponent<Node>());
+
                         }
                     }
 
                     //if ground has wall on up side
-                    if (g.neighbours["up"] != null && g.neighbours["up"].CompareTag("Wall"))
+                    if (g.neighbours["up"] != null && !g.neighbours["up"].CompareTag("Ground"))
                     {
                         Wall w = g.neighbours["up"].GetComponent<Wall>();
                         //find up walls neighbours
@@ -364,11 +367,13 @@ public class TerrainControl : MonoBehaviour
                         {
                             Destroy(w.gameObject);
                             worldmap[x, z + 1] = Instantiate(grounds[0], new Vector3(x, 0, z + 1), Quaternion.identity, this.transform);
+                            Pathfinding.addNode(worldmap[x, z + 1].GetComponent<Node>());
+
                         }
                     }
 
                     //if ground has wall on down side
-                    if (g.neighbours["down"] != null && g.neighbours["down"].CompareTag("Wall"))
+                    if (g.neighbours["down"] != null && !g.neighbours["down"].CompareTag("Ground"))
                     {
                         Wall w = g.neighbours["down"].GetComponent<Wall>();
                         //find up walls neighbours
@@ -378,6 +383,8 @@ public class TerrainControl : MonoBehaviour
                         {
                             Destroy(w.gameObject);
                             worldmap[x, z - 1] = Instantiate(grounds[0], new Vector3(x, 0, z - 1), Quaternion.identity, this.transform);
+                            Pathfinding.addNode(worldmap[x, z - 1].GetComponent<Node>());
+
                         }
                     }
                 }
@@ -552,6 +559,48 @@ public class TerrainControl : MonoBehaviour
         }
     }
 
+    private void createNormalWalls(ref GameObject[,] worldmap, int x, int z)
+    {
+
+        if (worldMap[x, z].TryGetComponent<Ground>(out Ground g))
+        {
+            GameObject[] neighbours = findNeighbours(worldMap, x, z);
+
+            g.setNeighbours(neighbours);
+
+            //left
+            if (g.neighbours["upperLeft"] != null && g.neighbours["left"] != null && g.neighbours["lowerLeft"] != null)
+                if (!g.neighbours["upperLeft"].CompareTag("Ground") && !g.neighbours["left"].CompareTag("Wall") && !g.neighbours["left"].CompareTag("Ground") && !g.neighbours["lowerLeft"].CompareTag("Ground"))
+                {
+                    Destroy(g.neighbours["left"].gameObject);
+                    worldmap[x - 1, z] = Instantiate(walls[0], new Vector3(x - 1, 0, z), Quaternion.identity, this.transform);
+                }
+            //right
+            if (g.neighbours["upperRight"] != null && g.neighbours["right"] != null && g.neighbours["lowerRight"] != null)
+                if (!g.neighbours["upperRight"].CompareTag("Ground") && !g.neighbours["right"].CompareTag("Wall") && !g.neighbours["right"].CompareTag("Ground") && !g.neighbours["lowerRight"].CompareTag("Ground"))
+                {
+                    Destroy(g.neighbours["right"].gameObject);
+                    worldmap[x + 1, z] = Instantiate(walls[0], new Vector3(x + 1, 0, z), Quaternion.identity, this.transform);
+                }
+            //up
+            if (g.neighbours["upperLeft"] != null && g.neighbours["up"] != null && g.neighbours["upperRight"] != null)
+                if (!g.neighbours["upperLeft"].CompareTag("Ground") && !g.neighbours["up"].CompareTag("Wall") && !g.neighbours["up"].CompareTag("Ground") && !g.neighbours["upperRight"].CompareTag("Ground"))
+                {
+                    Destroy(g.neighbours["up"].gameObject);
+                    worldmap[x, z + 1] = Instantiate(walls[0], new Vector3(x, 0, z + 1), Quaternion.identity, this.transform);
+                }
+            //down
+            if (g.neighbours["lowerLeft"] != null && g.neighbours["down"] != null && g.neighbours["lowerRight"] != null)
+                if (!g.neighbours["lowerLeft"].CompareTag("Ground") && !g.neighbours["down"].CompareTag("Wall") && !g.neighbours["down"].CompareTag("Ground") && !g.neighbours["lowerRight"].CompareTag("Ground"))
+                {
+                    Destroy(g.neighbours["down"].gameObject);
+                    worldmap[x, z - 1] = Instantiate(walls[0], new Vector3(x, 0, z - 1), Quaternion.identity, this.transform);
+                }
+        }
+
+    }
+
+
     private GameObject[] findNeighbours(GameObject[,] worldMap, int x, int z)
     {
         GameObject[] neighbours = new GameObject[8];
@@ -646,29 +695,21 @@ public class TerrainControl : MonoBehaviour
         else if (worldMap[replaceX, replaceZ].TryGetComponent<Wall>(out Wall wall))
             wall.setNeighbours(findNeighbours(worldMap, replaceX, replaceZ));
 
-
-        //remove lonely walls
-        removeSingleWalls(ref worldMap, 0, 0, worldWidth, worldHeight);
-
-        //rotate normal walls
-        rotateWallsToGround(ref worldMap, 0, 0, worldWidth, worldHeight);
-
-        //create normal corners
-        createCorners(ref worldMap, 0, 0, worldWidth, worldHeight);
-
-        //create inner corners
-        createInnerCorners(ref worldMap, 0, 0, worldWidth, worldHeight);
-
-        /*removeSingleWalls(ref worldMap, replaceX - 1, replaceZ - 1, replaceX + 1, replaceZ + 1);
+        //create normal walls
+        createNormalWalls(ref worldMap, replaceX, replaceZ);
+        //remove the single standing walls
+        removeSingleWalls(ref worldMap, replaceX - 1, replaceZ - 1, replaceX + 1, replaceZ + 1);
 
         //rotate normal walls
         rotateWallsToGround(ref worldMap, replaceX - 1, replaceZ - 1, replaceX + 1, replaceZ + 1);
 
         //create normal corners
-        createCorners(ref worldMap, replaceX - 1, replaceZ - 1, replaceX + 1, replaceZ + 1);
+        createCorners(ref worldMap, replaceX - 2, replaceZ - 2, replaceX + 2, replaceZ + 2);
 
         //create inner corners
-        createInnerCorners(ref worldMap, replaceX - 1, replaceZ - 1, replaceX + 1, replaceZ + 1);*/
+        createInnerCorners(ref worldMap, replaceX - 1, replaceZ - 1, replaceX + 1, replaceZ + 1);
+
+        Pathfinding.checkForNewConnections();
     }
 
     public List<Ground> getAllGroundObjects()

@@ -14,7 +14,8 @@ public class CameraOnUnit : MonoBehaviour
         {
             Vector3 position = unit.transform.position;
 
-            position.y = 10;
+            position.y = 20;
+            position.z -= 5;
 
             transform.position = position;
         }

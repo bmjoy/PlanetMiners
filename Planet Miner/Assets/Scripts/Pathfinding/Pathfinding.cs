@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -31,7 +32,7 @@ public class Pathfinding
         return null;
     }
 
-    public static List<Vector3> findPath(Vector3 startPos,Vector3 endPos)
+    public static List<Vector3> findPath(Vector3 startPos, Vector3 endPos)
     {
         Node start = getNodeByPosition(startPos);
         Node goal = getNodeByPosition(endPos);
@@ -134,5 +135,27 @@ public class Pathfinding
         path.Reverse();
 
         return path;
+    }
+
+    public static void checkForNewConnections()
+    {
+        Node n1 = null, n2 = null;
+
+        for (int i = 0; i < nodeMap.Count; i++)
+        {
+
+            n1 = nodeMap[i];
+            if (i + 1 < nodeMap.Count)
+                n2 = nodeMap[i + 1];
+            else if (i == nodeMap.Count - 1)
+                n2 = nodeMap[i - 1];
+
+            if (Vector3.Distance(n1.transform.position, n2.transform.position) <= 1)
+            {
+                n1.addConnection(n2);
+                n2.addConnection(n1);
+            }
+
+        }
     }
 }
