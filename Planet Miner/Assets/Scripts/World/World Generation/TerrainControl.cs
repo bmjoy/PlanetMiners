@@ -652,14 +652,6 @@ public class TerrainControl : MonoBehaviour
         return neighbours;
     }
 
-    void clearWorld()
-    {
-        foreach (GameObject g in worldMap)
-            Destroy(g);
-
-        worldMap = new GameObject[worldWidth, worldHeight];
-    }
-
     public void replaceWorldObject(GameObject oldObj, string newObj)
     {
 
