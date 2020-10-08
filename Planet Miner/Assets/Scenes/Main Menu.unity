@@ -3574,6 +3574,11 @@ PrefabInstance:
       propertyPath: m_textInfo.pageCount
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5571659469960176678, guid: 1a7624e496e0d4d4f92dea3dd8523700,
+        type: 3}
+      propertyPath: m_text
+      value: 50
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1a7624e496e0d4d4f92dea3dd8523700, type: 3}
 --- !u!224 &1427103384 stripped
@@ -5763,6 +5768,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_CharacterValidation
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5571659469960176678, guid: 1a7624e496e0d4d4f92dea3dd8523700,
+        type: 3}
+      propertyPath: m_text
+      value: 50
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1a7624e496e0d4d4f92dea3dd8523700, type: 3}
