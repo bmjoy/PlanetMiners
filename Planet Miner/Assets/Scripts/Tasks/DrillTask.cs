@@ -49,7 +49,7 @@ public class DrillTask : Task
 
     private bool isNextToWall()
     {
-        if (_groundNextToWall == null)
+        if (_groundNextToWall.Equals(null))
             findWallGround();
 
         return unit.isAtPosition(_groundNextToWall.transform.position);

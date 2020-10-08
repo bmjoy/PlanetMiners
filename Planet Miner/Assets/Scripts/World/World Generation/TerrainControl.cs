@@ -575,25 +575,29 @@ public class TerrainControl : MonoBehaviour
                     if (g.neighbours["upperLeft"] != null && g.neighbours["left"] != null && g.neighbours["lowerLeft"] != null)
                         if (!g.neighbours["upperLeft"].CompareTag("Ground") && !g.neighbours["left"].CompareTag("Wall") && !g.neighbours["left"].CompareTag("Ground") && !g.neighbours["lowerLeft"].CompareTag("Ground"))
                         {
-                            replaceWorldObject(g.neighbours["left"], "Wall");
+                            Destroy(g.neighbours["left"].gameObject);
+                            worldmap[x - 1, z] = Instantiate(walls[0], new Vector3(x - 1, 0, z), Quaternion.identity, this.transform);
                         }
                     //right
                     if (g.neighbours["upperRight"] != null && g.neighbours["right"] != null && g.neighbours["lowerRight"] != null)
                         if (!g.neighbours["upperRight"].CompareTag("Ground") && !g.neighbours["right"].CompareTag("Wall") && !g.neighbours["right"].CompareTag("Ground") && !g.neighbours["lowerRight"].CompareTag("Ground"))
                         {
-                            replaceWorldObject(g.neighbours["right"], "Wall");
+                            Destroy(g.neighbours["right"].gameObject);
+                            worldmap[x + 1, z] = Instantiate(walls[0], new Vector3(x + 1, 0, z), Quaternion.identity, this.transform);
                         }
                     //up
                     if (g.neighbours["upperLeft"] != null && g.neighbours["up"] != null && g.neighbours["upperRight"] != null)
                         if (!g.neighbours["upperLeft"].CompareTag("Ground") && !g.neighbours["up"].CompareTag("Wall") && !g.neighbours["up"].CompareTag("Ground") && !g.neighbours["upperRight"].CompareTag("Ground"))
                         {
-                            replaceWorldObject(g.neighbours["up"], "Wall");
+                            Destroy(g.neighbours["up"].gameObject);
+                            worldmap[x, z + 1] = Instantiate(walls[0], new Vector3(x, 0, z + 1), Quaternion.identity, this.transform);
                         }
                     //down
                     if (g.neighbours["lowerLeft"] != null && g.neighbours["down"] != null && g.neighbours["lowerRight"] != null)
                         if (!g.neighbours["lowerLeft"].CompareTag("Ground") && !g.neighbours["down"].CompareTag("Wall") && !g.neighbours["down"].CompareTag("Ground") && !g.neighbours["lowerRight"].CompareTag("Ground"))
                         {
-                            replaceWorldObject(g.neighbours["down"], "Wall");
+                            Destroy(g.neighbours["down"].gameObject);
+                            worldmap[x, z - 1] = Instantiate(walls[0], new Vector3(x, 0, z - 1), Quaternion.identity, this.transform);
                         }
                 }
             }
@@ -688,19 +692,20 @@ public class TerrainControl : MonoBehaviour
             wall.setNeighbours(findNeighbours(worldMap, replaceX, replaceZ));
 
         //remove the single standing walls
-        removeSingleWalls(ref worldMap, replaceX - 2, replaceZ - 2, replaceX + 2, replaceZ + 2);
+        removeSingleWalls(ref worldMap, replaceX - 1, replaceZ - 1, replaceX + 1, replaceZ + 1);
 
-        createNormalWalls(ref worldMap, replaceX - 2, replaceZ - 2, replaceX + 2, replaceZ + 2);
         //create normal walls
+        createNormalWalls(ref worldMap, replaceX - 1, replaceZ - 1, replaceX + 1, replaceZ + 1);
 
         //rotate normal walls
-        rotateWallsToGround(ref worldMap, replaceX - 2, replaceZ - 2, replaceX + 2, replaceZ + 2);
+        rotateWallsToGround(ref worldMap, replaceX - 1, replaceZ - 1, replaceX + 1, replaceZ + 1);
 
         //create normal corners
-        createCorners(ref worldMap, replaceX - 2, replaceZ - 2, replaceX + 2, replaceZ + 2);
+        createCorners(ref worldMap,0,0,worldWidth,worldHeight);
 
         //create inner corners
-        createInnerCorners(ref worldMap, replaceX - 2, replaceZ - 2, replaceX + 2, replaceZ + 2);
+        createInnerCorners(ref worldMap, 0, 0, worldWidth, worldHeight);
+
 
         Pathfinding.checkForNewConnections();
     }
