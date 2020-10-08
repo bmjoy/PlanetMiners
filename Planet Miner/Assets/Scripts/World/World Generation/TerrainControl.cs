@@ -129,7 +129,7 @@ public class TerrainControl : MonoBehaviour
         removeSingleWalls(ref worldMap, 0, 0, worldWidth, worldHeight);
 
         //rotate normal walls
-        rotateWallsToGround(ref worldMap, 0, 0, worldWidth, worldHeight);
+        rotateWallsToGround(0, 0, worldWidth, worldHeight);
 
         //create normal corners
         createCorners(0, 0, worldWidth, worldHeight);
@@ -481,42 +481,46 @@ public class TerrainControl : MonoBehaviour
         }
     }
 
-    private void rotateWallsToGround(ref GameObject[,] worldmap, int startx, int startz, int endx, int endz)
+    private void rotateWallsToGround(int startx, int startz, int endx, int endz)
     {
         for (int x = startx; x < endx; x++)
         {
             for (int z = startz; z < endz; z++)
             {
-                Ground g;
-                if (worldMap[x, z].TryGetComponent<Ground>(out g))
-                {
-                    g.setNeighbours(findNeighbours(worldmap, x, z));
+                if (worldMap[x, z].TryGetComponent<Wall>(out Wall wall))
+                    if (wall.CompareTag("Wall"))
+                    {
+                        wall.setNeighbours(findNeighbours(worldMap, x, z));
 
-                    //rotate walls left from ground
-                    if (g.neighbours["left"] != null && g.neighbours["left"].CompareTag("Wall"))
-                    {
-                        g.neighbours["left"].transform.rotation = Quaternion.Euler(0, 90, 0);
+                        if (wall.neighbours["left"] != null && wall.neighbours["left"].CompareTag("Ground"))
+                        {
+                            wall.transform.rotation = Quaternion.Euler(0, -90, 0);
+                        }
+                        else
+                        if (wall.neighbours["right"] != null && wall.neighbours["right"].CompareTag("Ground"))
+                        {
+                            wall.transform.rotation = Quaternion.Euler(0, 90, 0);
+                        }
+                        else
+                        if (wall.neighbours["up"] != null && wall.neighbours["up"].CompareTag("Ground"))
+                        {
+                            wall.transform.rotation = Quaternion.Euler(0, 0, 0);
+                        }
+                        else
+                        if (wall.neighbours["down"] != null && wall.neighbours["down"].CompareTag("Ground"))
+                        {
+                            wall.transform.rotation = Quaternion.Euler(0, 180, 0);
+                        }
                     }
-                    //rotate walls right from ground
-                    if (g.neighbours["right"] != null && g.neighbours["right"].CompareTag("Wall"))
-                    {
-                        g.neighbours["right"].transform.rotation = Quaternion.Euler(0, -90, 0);
-                    }
-                    //rotate walls up from ground
-                    if (g.neighbours["up"] != null && g.neighbours["up"].CompareTag("Wall"))
-                    {
-                        g.neighbours["up"].transform.rotation = Quaternion.Euler(0, 180, 0);
-                    }
-                }
             }
         }
     }
 
     private void createNormalWalls(int startx, int startz, int endx, int endz)
     {
-        for (int x = startx; x < endx +1; x++)
+        for (int x = startx; x < endx + 1; x++)
         {
-            for (int z = startz; z < endz +1 ; z++)
+            for (int z = startz; z < endz + 1; z++)
             {
                 if (worldMap[x, z].TryGetComponent<Wall>(out Wall wall))
                 {
@@ -644,7 +648,7 @@ public class TerrainControl : MonoBehaviour
         createNormalWalls(replaceX - 1, replaceZ - 1, replaceX + 1, replaceZ + 1);
 
         //rotate normal walls
-        rotateWallsToGround(ref worldMap, replaceX - 1, replaceZ - 1, replaceX + 1, replaceZ + 1);
+        rotateWallsToGround(replaceX - 1, replaceZ - 1, replaceX + 2, replaceZ + 2);
 
         //create normal corners
         createCorners(0, 0, worldWidth, worldHeight);
