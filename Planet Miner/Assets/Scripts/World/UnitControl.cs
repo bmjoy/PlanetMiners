@@ -37,14 +37,21 @@ public class UnitControl : MonoBehaviour
     {
         switch (task)
         {
-            case "MoveTask":
-
+            case "WalkTask":
+                createWalkTask(target);
                 break;
 
             case "DrillTask":
                 createDrillTasks(target);
                 break;
         }
+    }
+
+    private void createWalkTask(GameObject target)
+    {
+        Vector3 targetPos = target.transform.position;
+        foreach (Unit unit in _selectedUnits)
+            unit.changeTask(new WalkTask(targetPos));
     }
 
     private void createDrillTasks(GameObject target)
@@ -54,6 +61,8 @@ public class UnitControl : MonoBehaviour
             unit.changeTask(new DrillTask(targetWall));
 
     }
+
+    
 
     public bool hasUnitsSelected()
     {
