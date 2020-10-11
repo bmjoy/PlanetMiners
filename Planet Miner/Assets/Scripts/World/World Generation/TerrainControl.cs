@@ -126,7 +126,7 @@ public class TerrainControl : MonoBehaviour
         removeSingleGroundCaves(ref noiseMap);
 
         //remove lonely walls
-        removeSingleWalls(ref worldMap, 0, 0, worldWidth, worldHeight);
+        removeSingleWalls(0, 0, worldWidth, worldHeight);
 
         //rotate normal walls
         rotateWallsToGround(0, 0, worldWidth, worldHeight);
@@ -312,81 +312,34 @@ public class TerrainControl : MonoBehaviour
             }
         }
     }
-    private void removeSingleWalls(ref GameObject[,] worldmap, int startx, int startz, int endx, int endz)
+    private void removeSingleWalls(int startx, int startz, int endx, int endz)
     {
         for (int x = startx; x < endx; x++)
         {
             for (int z = startz; z < endz; z++)
             {
-                Ground g;
-                if (worldMap[x, z].TryGetComponent<Ground>(out g))
+                
+                if (worldMap[x, z].TryGetComponent<Wall>(out  Wall wall))
                 {
                     GameObject[] neighbours = findNeighbours(worldMap, x, z);
 
-                    g.setNeighbours(neighbours);
+                    wall.setNeighbours(neighbours);
 
-                    //if ground has wall on left side
-                    if (g.neighbours["left"] != null && !g.neighbours["left"].CompareTag("Ground"))
-                    {
-                        Wall w = g.neighbours["left"].GetComponent<Wall>();
-                        //find left walls neighbours
-                        w.setNeighbours(findNeighbours(worldmap, x - 1, z));
-                        //if wall doesnt have left and right neighbour walls then destroy wall
-                        if (w.neighbours["left"] != null && w.neighbours["left"].CompareTag("Ground"))
+                    if(wall.neighbours["left"] != null && wall.neighbours["right"] != null)
+                        if(wall.neighbours["left"].CompareTag("Ground") && wall.neighbours["right"].CompareTag("Ground"))
                         {
-                            Destroy(w.gameObject);
-                            worldmap[x - 1, z] = Instantiate(grounds[0], new Vector3(x - 1, 0, z), Quaternion.identity, this.transform);
-                            Pathfinding.addNode(worldmap[x - 1, z].GetComponent<Node>());
+                            Destroy(wall.gameObject);
+                            worldMap[x, z] = Instantiate(grounds[0], new Vector3(x, 0, z), Quaternion.identity, this.transform);
+                            Pathfinding.addNode(worldMap[x, z].GetComponent<Node>());
                         }
-                    }
 
-                    //if ground has wall on right side
-                    if (g.neighbours["right"] != null && !g.neighbours["right"].CompareTag("Ground"))
-                    {
-                        Wall w = g.neighbours["right"].GetComponent<Wall>();
-                        //find right walls neighbours
-                        w.setNeighbours(findNeighbours(worldmap, x + 1, z));
-                        //if wall doesnt have left and right neighbour walls then destroy wall
-                        if (w.neighbours["right"] != null && w.neighbours["right"].CompareTag("Ground"))
+                    if (wall.neighbours["up"] != null && wall.neighbours["down"] != null)
+                        if (wall.neighbours["up"].CompareTag("Ground") && wall.neighbours["down"].CompareTag("Ground"))
                         {
-                            Destroy(w.gameObject);
-                            worldmap[x + 1, z] = Instantiate(grounds[0], new Vector3(x + 1, 0, z), Quaternion.identity, this.transform);
-                            Pathfinding.addNode(worldmap[x + 1, z].GetComponent<Node>());
-
+                            Destroy(wall.gameObject);
+                            worldMap[x, z] = Instantiate(grounds[0], new Vector3(x, 0, z), Quaternion.identity, this.transform);
+                            Pathfinding.addNode(worldMap[x, z].GetComponent<Node>());
                         }
-                    }
-
-                    //if ground has wall on up side
-                    if (g.neighbours["up"] != null && !g.neighbours["up"].CompareTag("Ground"))
-                    {
-                        Wall w = g.neighbours["up"].GetComponent<Wall>();
-                        //find up walls neighbours
-                        w.setNeighbours(findNeighbours(worldmap, x, z + 1));
-                        //if wall doesnt have up and down neighbour walls then destroy wall
-                        if (w.neighbours["up"] != null && w.neighbours["up"].CompareTag("Ground"))
-                        {
-                            Destroy(w.gameObject);
-                            worldmap[x, z + 1] = Instantiate(grounds[0], new Vector3(x, 0, z + 1), Quaternion.identity, this.transform);
-                            Pathfinding.addNode(worldmap[x, z + 1].GetComponent<Node>());
-
-                        }
-                    }
-
-                    //if ground has wall on down side
-                    if (g.neighbours["down"] != null && !g.neighbours["down"].CompareTag("Ground"))
-                    {
-                        Wall w = g.neighbours["down"].GetComponent<Wall>();
-                        //find up walls neighbours
-                        w.setNeighbours(findNeighbours(worldmap, x, z - 1));
-                        //if wall doesnt have up and down neighbour walls then destroy wall
-                        if (w.neighbours["down"] != null && w.neighbours["down"].CompareTag("Ground"))
-                        {
-                            Destroy(w.gameObject);
-                            worldmap[x, z - 1] = Instantiate(grounds[0], new Vector3(x, 0, z - 1), Quaternion.identity, this.transform);
-                            Pathfinding.addNode(worldmap[x, z - 1].GetComponent<Node>());
-
-                        }
-                    }
                 }
             }
         }
@@ -736,7 +689,7 @@ public class TerrainControl : MonoBehaviour
 
 
         //remove the single standing walls
-        removeSingleWalls(ref worldMap, replaceX - 2, replaceZ - 2, replaceX + 2, replaceZ + 2);
+        removeSingleWalls(replaceX - 2, replaceZ - 2, replaceX + 2, replaceZ + 2);
 
         //check for cave corners
         checkCaveCorners(replaceX - 2, replaceZ - 2, replaceX + 2, replaceZ + 2);
