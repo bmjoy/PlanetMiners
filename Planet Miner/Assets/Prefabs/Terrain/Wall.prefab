@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2769471344474618084}
   - component: {fileID: 1278066246556068651}
   m_Layer: 9
-  m_Name: TunnelWall
+  m_Name: Wall
   m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -93,6 +93,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a90deced9241054fab551e71ba2c6d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dropObject: {fileID: -927199367670048503, guid: 0d45622b238275f458b05457d118a580,
+    type: 3}
 --- !u!65 &1278066246556068651
 BoxCollider:
   m_ObjectHideFlags: 0

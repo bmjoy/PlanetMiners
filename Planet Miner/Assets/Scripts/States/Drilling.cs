@@ -13,13 +13,15 @@ public class Drilling : State
         _unit = unit;
         _targetWall = targetWall;
         _drillDamage = drillDamage;
-
     }
 
     public override void run()
     {
         _targetWall.doDamage(_drillDamage);
         if (_targetWall.health < 0)
+        {
+            _targetWall.destroyed();
             GameObject.FindObjectOfType<TerrainControl>().replaceWorldObject(_targetWall.gameObject, "Ground");
+        }
     }
 }

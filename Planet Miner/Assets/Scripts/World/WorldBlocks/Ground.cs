@@ -4,5 +4,8 @@ using UnityEngine;
 
 public class Ground : WorldBlock
 {
-    
+    public override void destroyed()
+    {
+        
+    }
 }
