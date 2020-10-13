@@ -706,6 +706,12 @@ public class TerrainControl : MonoBehaviour
         //create inner corners
         createInnerCorners(0, 0, worldWidth, worldHeight);
 
+        //remove the single standing walls
+        removeSingleWalls(replaceX - 2, replaceZ - 2, replaceX + 2, replaceZ + 2);
+
+        //create normal walls
+        createNormalWalls(replaceX - 2, replaceZ - 2, replaceX + 2, replaceZ + 2);
+
 
         Pathfinding.checkForNewConnections();
     }
