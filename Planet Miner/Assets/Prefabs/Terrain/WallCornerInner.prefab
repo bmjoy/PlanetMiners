@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -1195999828810310918}
   - component: {fileID: 5430385624562111972}
   m_Layer: 9
-  m_Name: TunnelCornerInner
+  m_Name: WallCornerInner
   m_TagString: WallCornerInner
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -59,8 +59,8 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -7393093796677544362, guid: 29c266f4d43430140a643a3a76e4856a, type: 3}
-  - {fileID: 8507789265930873676, guid: 623041225c18ed941a8ffac84e2076a3, type: 3}
+  - {fileID: 2100000, guid: 65c3a1ac57be5ab42b216e3e57c67db7, type: 2}
+  - {fileID: 2100000, guid: 9b5c76ff84696b34cb0de799a3f5a3f2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -93,6 +93,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a90deced9241054fab551e71ba2c6d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dropObject: {fileID: 0}
 --- !u!65 &5430385624562111972
 BoxCollider:
   m_ObjectHideFlags: 0

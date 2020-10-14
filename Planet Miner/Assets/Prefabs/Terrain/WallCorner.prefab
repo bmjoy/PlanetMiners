@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1072209431440513630}
   - component: {fileID: 2786695753968925927}
   m_Layer: 9
-  m_Name: TunnelCorner
+  m_Name: WallCorner
   m_TagString: WallCorner
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -93,6 +93,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a90deced9241054fab551e71ba2c6d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dropObject: {fileID: 0}
 --- !u!65 &2786695753968925927
 BoxCollider:
   m_ObjectHideFlags: 0
