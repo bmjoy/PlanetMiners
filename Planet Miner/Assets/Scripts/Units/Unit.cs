@@ -12,13 +12,12 @@ public class Unit : MonoBehaviour
 
     private Task _task = null;
 
+    public Inventory _inventory;
+
     public float moveSpeed
     {
         get { return _moveSpeed * Time.deltaTime; }
     }
-
-
-
 
     private void Update()
     {
