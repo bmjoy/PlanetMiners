@@ -1,2 +1,3 @@
 # PlanetMiners
-Planet Miner is a rock raiders type game
+Planet Miner is a game inspired by rock raiders.
+Made in Unity
