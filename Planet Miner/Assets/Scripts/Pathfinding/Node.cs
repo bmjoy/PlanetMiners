@@ -101,7 +101,7 @@ public class Node : MonoBehaviour
         get => transform.position;
     }
 
-    private void OnDrawGizmos()
+    /*private void OnDrawGizmos()
     {
         if (PlayerPrefs.GetInt("Debugging") == 0) return;
 
@@ -160,5 +160,5 @@ public class Node : MonoBehaviour
 
 
         }
-    }
+    }*/
 }

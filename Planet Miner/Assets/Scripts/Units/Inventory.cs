@@ -3,23 +3,43 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
+    public Transform _handSlotPosition;
     private GameObject _handSlot;
     private List<GameObject> _tools = new List<GameObject>();
     private GameObject _weapon;
 
+
     private int _maxTools = 1;
+
+    public GameObject itemInHand()
+    {
+        return _handSlot;
+    }
 
     public void pickUpItem(GameObject gameObject)
     {
+        if (gameObject == null)
+            return;
+
+        if (_handSlot != null)
+            dropItem();
+
         _handSlot = gameObject;
-        Destroy(gameObject);
+        _handSlot.transform.SetParent(_handSlotPosition);
+        _handSlot.transform.position = _handSlotPosition.position;
+        
     }
 
-    public void dropItem(string item)
+    public void dropItem()
     {
+        if (_handSlot == null)
+            return;
+
         Vector3 dropPosition = transform.position;
-        dropPosition += transform.forward;
-        Instantiate(_handSlot, dropPosition, Quaternion.identity);
+        dropPosition.y = 0f;
+
+        _handSlot.transform.SetParent(transform.parent);
+        _handSlot.transform.position = dropPosition;
     }
 
     public void addTool(GameObject toolAdded)
@@ -30,7 +50,7 @@ public class Inventory : MonoBehaviour
             {
                 if (tool == null || tool.name != toolAdded.name)
                     _tools.Add(toolAdded);
-                Destroy(toolAdded);
+               
             }
         }
     }
@@ -59,7 +79,7 @@ public class Inventory : MonoBehaviour
             }
 
         else if (_handSlot.CompareTag("Resource"))
-            dropItem(_handSlot.name);
+            dropItem();
         else if (_handSlot.CompareTag("Weapon"))
             unequipWeapon(_handSlot.name);
     }
@@ -91,7 +111,7 @@ public class Inventory : MonoBehaviour
         }
 
         else if (_handSlot.CompareTag("Resource"))
-            dropItem(_handSlot.name);
+            dropItem();
         else if (_handSlot.CompareTag("Tool"))
             unequipTool(_handSlot.name);
     }

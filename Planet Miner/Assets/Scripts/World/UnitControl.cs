@@ -38,32 +38,28 @@ public class UnitControl : MonoBehaviour
         switch (task)
         {
             case "WalkTask":
-                createWalkTask(target);
+                Vector3 targetPos = target.transform.position;
+                foreach (Unit unit in _selectedUnits)
+                    unit.changeTask(new WalkTask(targetPos));
                 break;
 
             case "DrillTask":
-                createDrillTasks(target);
+                Wall targetWall = target.GetComponent<Wall>();
+                foreach (Unit unit in _selectedUnits)
+                    unit.changeTask(new DrillTask(targetWall));
+                break;
+
+            case "PickupTask":
+                Resource resource = target.GetComponent<Resource>();
+                foreach (Unit unit in _selectedUnits)
+                    unit.changeTask(new PickupTask(resource));
+                break;
+
+            case "DropTask":
+
                 break;
         }
     }
-
-    private void createWalkTask(GameObject target)
-    {
-        Vector3 targetPos = target.transform.position;
-        foreach (Unit unit in _selectedUnits)
-            unit.changeTask(new WalkTask(targetPos));
-    }
-
-    private void createDrillTasks(GameObject target)
-    {
-        Wall targetWall = target.GetComponent<Wall>();
-        foreach (Unit unit in _selectedUnits)
-            unit.changeTask(new DrillTask(targetWall));
-
-    }
-
-    
-
     public bool hasUnitsSelected()
     {
         return (_selectedUnits.Count > 0);

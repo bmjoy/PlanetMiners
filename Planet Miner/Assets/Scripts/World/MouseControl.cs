@@ -50,10 +50,13 @@ public class MouseControl : MonoBehaviour
             switch (hit.tag)
             {
                 case "Ground":
-                    unitControl.assignTaskToSelected("WalkTask",hit);
+                    unitControl.assignTaskToSelected("WalkTask", hit);
                     break;
                 case "Wall":
                     unitControl.assignTaskToSelected("DrillTask", hit);
+                    break;
+                case "Resource":
+                    unitControl.assignTaskToSelected("PickupTask", hit);
                     break;
             }
 

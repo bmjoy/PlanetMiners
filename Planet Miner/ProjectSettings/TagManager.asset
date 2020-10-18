@@ -9,6 +9,7 @@ TagManager:
   - WallCorner
   - WallCornerInner
   - Unit
+  - Resource
   layers:
   - Default
   - TransparentFX

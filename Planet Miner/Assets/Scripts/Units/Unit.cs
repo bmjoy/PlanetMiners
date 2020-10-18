@@ -19,6 +19,16 @@ public class Unit : MonoBehaviour
         get { return _moveSpeed * Time.deltaTime; }
     }
 
+    public bool hasItem(Equipable item)
+    {
+        return (item.gameObject == _inventory.itemInHand());
+    }
+
+    public Inventory inventory
+    {
+        get => _inventory;
+    }
+
     private void Update()
     {
         if (_task == null)
