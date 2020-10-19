@@ -21,6 +21,8 @@ public class MouseControl : MonoBehaviour
 
     private ActionButton lastButtonPressed = null;
 
+    public Texture2D arrowCursor;
+
     private void Start()
     {
         targetLayer = 1 << 16;
@@ -102,6 +104,7 @@ public class MouseControl : MonoBehaviour
             case MouseMode.waitingForTarget:
                 unitControl.assignTaskToSelected(lastButtonPressed.taskName, hit);
                 _mouseMode = MouseMode.unitSelected;
+                changePointer(arrowCursor);
                 break;
         }
 
@@ -118,6 +121,8 @@ public class MouseControl : MonoBehaviour
         unitControl.deselectUnits();
         _mouseMode = MouseMode.none;
         targetLayer = 1 << 16;
+        changePointer(arrowCursor);
+
     }
 
     private void updateSelectField()
@@ -167,6 +172,7 @@ public class MouseControl : MonoBehaviour
 
     public void changePointer(Texture2D cursorTexture)
     {
+        if (cursorTexture == null) return;
         Cursor.SetCursor(cursorTexture, new Vector2(0, 0), CursorMode.Auto);
     }
 

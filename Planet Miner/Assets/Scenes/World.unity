@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -994,6 +994,7 @@ MonoBehaviour:
   targetLayer:
     serializedVersion: 2
     m_Bits: 4294967295
+  arrowCursor: {fileID: 2800000, guid: c716c8687f524dc41bc130a0ede0585a, type: 3}
 --- !u!1001 &1943977630
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1114,7 +1115,7 @@ PrefabInstance:
     - target: {fileID: 6056687959688290575, guid: 9fcef055362f9d048a11e0d4fb70fe0a,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6056687959688290575, guid: 9fcef055362f9d048a11e0d4fb70fe0a,
         type: 3}
@@ -1161,6 +1162,36 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
       objectReference: {fileID: 1943977632}
+    - target: {fileID: 6056687959688290575, guid: 9fcef055362f9d048a11e0d4fb70fe0a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1940014592}
+    - target: {fileID: 6056687959688290575, guid: 9fcef055362f9d048a11e0d4fb70fe0a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: changePointer
+      objectReference: {fileID: 0}
+    - target: {fileID: 6056687959688290575, guid: 9fcef055362f9d048a11e0d4fb70fe0a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6056687959688290575, guid: 9fcef055362f9d048a11e0d4fb70fe0a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 2800000, guid: 19f33fc644ff847498205856c1f495f9, type: 3}
+    - target: {fileID: 6056687959688290575, guid: 9fcef055362f9d048a11e0d4fb70fe0a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Texture2D, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 6056687959688290575, guid: 9fcef055362f9d048a11e0d4fb70fe0a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1834730001384825607, guid: 9fcef055362f9d048a11e0d4fb70fe0a,
         type: 3}
       propertyPath: m_Sprite
@@ -1193,6 +1224,11 @@ PrefabInstance:
       propertyPath: targetLayer.m_Bits
       value: 32768
       objectReference: {fileID: 0}
+    - target: {fileID: 6964109548214738414, guid: 9fcef055362f9d048a11e0d4fb70fe0a,
+        type: 3}
+      propertyPath: cursorImage
+      value: 
+      objectReference: {fileID: 2800000, guid: 262ced85d7c4a2b4ab498ec82048e891, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9fcef055362f9d048a11e0d4fb70fe0a, type: 3}
 --- !u!224 &1943977631 stripped
@@ -1327,7 +1363,7 @@ PrefabInstance:
     - target: {fileID: 6056687959688290575, guid: 9fcef055362f9d048a11e0d4fb70fe0a,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6056687959688290575, guid: 9fcef055362f9d048a11e0d4fb70fe0a,
         type: 3}
@@ -1374,6 +1410,36 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
       objectReference: {fileID: 6459193309077490462}
+    - target: {fileID: 6056687959688290575, guid: 9fcef055362f9d048a11e0d4fb70fe0a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1940014592}
+    - target: {fileID: 6056687959688290575, guid: 9fcef055362f9d048a11e0d4fb70fe0a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: changePointer
+      objectReference: {fileID: 0}
+    - target: {fileID: 6056687959688290575, guid: 9fcef055362f9d048a11e0d4fb70fe0a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6056687959688290575, guid: 9fcef055362f9d048a11e0d4fb70fe0a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 2800000, guid: 3d1753f430c469b4ca7411607db2cb74, type: 3}
+    - target: {fileID: 6056687959688290575, guid: 9fcef055362f9d048a11e0d4fb70fe0a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Texture2D, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 6056687959688290575, guid: 9fcef055362f9d048a11e0d4fb70fe0a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1834730001384825607, guid: 9fcef055362f9d048a11e0d4fb70fe0a,
         type: 3}
       propertyPath: m_Sprite
@@ -1406,6 +1472,11 @@ PrefabInstance:
       propertyPath: targetLayer.m_Bits
       value: 6144
       objectReference: {fileID: 0}
+    - target: {fileID: 6964109548214738414, guid: 9fcef055362f9d048a11e0d4fb70fe0a,
+        type: 3}
+      propertyPath: cursorImage
+      value: 
+      objectReference: {fileID: 2800000, guid: 7f8ea1470f5895842987b36d6ec9f54e, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9fcef055362f9d048a11e0d4fb70fe0a, type: 3}
 --- !u!224 &6459193309077490461 stripped
