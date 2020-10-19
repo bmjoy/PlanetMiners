@@ -40,6 +40,7 @@ public class Inventory : MonoBehaviour
 
         _handSlot.transform.SetParent(transform.parent);
         _handSlot.transform.position = dropPosition;
+        _handSlot = null;
     }
 
     public void addTool(GameObject toolAdded)

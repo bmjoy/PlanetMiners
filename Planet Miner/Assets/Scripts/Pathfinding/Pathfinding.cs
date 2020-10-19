@@ -40,7 +40,7 @@ public class Pathfinding
         if (start == null || goal == null)
             return null;
         //a* initializing
-        Debug.Log("Start pathfind");
+
 
         //list of unvisited nodes
         List<Node> openSet = new List<Node>();
@@ -66,7 +66,6 @@ public class Pathfinding
             //check if current is goal
             if (current == goal)
             {
-                Debug.Log("Path found, now creating");
                 return makePath(current);
             }
             //move current to closedSet
@@ -100,7 +99,6 @@ public class Pathfinding
             }
         }
         //no target found
-        Debug.Log("No path found");
         return null;
     }
 

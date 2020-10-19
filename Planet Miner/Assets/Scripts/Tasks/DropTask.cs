@@ -11,7 +11,7 @@ public class DropTask : Task
 
     public override bool isFinished()
     {
-        return !unit.hasItem(unit.inventory.itemInHand().GetComponent<Equipable>());
+        return (unit.inventory.itemInHand() == null);
     }
 
     public override void start()
