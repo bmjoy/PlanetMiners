@@ -10,6 +10,7 @@ TagManager:
   - WallCornerInner
   - Unit
   - Resource
+  - ActionButton
   layers:
   - Default
   - TransparentFX
@@ -21,14 +22,14 @@ TagManager:
   - 
   - PostProcessing
   - Terrain
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Ground
+  - Wall
+  - WallCrystal
+  - Ore
+  - Crystal
+  - Rubble
+  - Unit
+  - Building
   - 
   - 
   - 

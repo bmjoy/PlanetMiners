@@ -2,15 +2,36 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class MouseControl : MonoBehaviour
 {
     public Camera worldCamera;
     public UnitControl unitControl;
 
-    private bool mouseIsPressed = false;
-    private float timeMouseHeld;
-    private float timeToHoldMouse = 3f;
+    private bool _mouseIsPressed = false;
+    private float _timeMouseHeld;
+    private float _timeToHoldMouse = 3f;
+
+    private MouseMode _mouseMode = MouseMode.none;
+
+    public LayerMask targetLayer;
+
+
+    private ActionButton lastButtonPressed = null;
+
+    private void Start()
+    {
+        targetLayer = 1 << 16;
+    }
+    public enum MouseMode
+    {
+        none,
+        unitSelected,
+        waitingForTarget
+    }
+
+    private string _targetTag;
 
     private void Update()
     {
@@ -18,7 +39,7 @@ public class MouseControl : MonoBehaviour
             if (isMouseHeld())
                 updateSelectField();
             else
-                singlePress();
+                leftClick(getRayTarget(Input.mousePosition));
 
         if (Input.GetMouseButtonDown(1))
             righClick();
@@ -27,14 +48,63 @@ public class MouseControl : MonoBehaviour
             mouseUp();
     }
 
-    private void singlePress()
+    public void leftClick(GameObject hit)
     {
-        GameObject hit = getRayTarget(Input.mousePosition);
-        if (hit.CompareTag("Unit"))
-            unitControl.selectSingleUnit(hit.transform.GetComponent<Unit>());
-        else
-        if (hit.CompareTag("Ground"))
-            unitControl.deselectUnits();
+        if (hit == null)
+            return;
+
+        switch (_mouseMode)
+        {
+            case MouseMode.none:
+                if (hit.CompareTag("Unit"))
+                {
+                    unitControl.selectSingleUnit(hit.transform.GetComponent<Unit>());
+                    _mouseMode = MouseMode.unitSelected;
+                }
+                break;
+
+            case MouseMode.unitSelected:
+                switch (hit.tag)
+                {
+                    case "Ground":
+                        unitControl.assignTaskToSelected("WalkTask", hit);
+                        break;
+
+                    case "Wall":
+                        //unitControl.assignTaskToSelected("DrillTask", hit);
+                        break;
+
+                    case "Resource":
+                        unitControl.assignTaskToSelected("PickupTask", hit);
+                        break;
+
+                    case "ActionButton":
+                        ActionButton actionButton = hit.GetComponent<ActionButton>();
+                        lastButtonPressed = actionButton;
+
+                        if (actionButton.actionType.Equals(ActionButton.ActionType.needTarget))
+                        {
+                            _mouseMode = MouseMode.waitingForTarget;
+
+                            targetLayer = actionButton.targetLayer;
+
+                            
+                        }
+                        else if (actionButton.actionType.Equals(ActionButton.ActionType.instant))
+                        {
+                            unitControl.assignTaskToSelected(lastButtonPressed.taskName, null);
+                        }
+                        break;
+                }
+
+                break;
+            case MouseMode.waitingForTarget:
+                unitControl.assignTaskToSelected(lastButtonPressed.taskName, hit);
+                _mouseMode = MouseMode.unitSelected;
+                break;
+        }
+
+
     }
 
     private void mouseHold()
@@ -44,22 +114,9 @@ public class MouseControl : MonoBehaviour
 
     private void righClick()
     {
-        GameObject hit = getRayTarget(Input.mousePosition);
-
-        if (unitControl.hasUnitsSelected())
-            switch (hit.tag)
-            {
-                case "Ground":
-                    unitControl.assignTaskToSelected("WalkTask", hit);
-                    break;
-                case "Wall":
-                    unitControl.assignTaskToSelected("DrillTask", hit);
-                    break;
-                case "Resource":
-                    unitControl.assignTaskToSelected("PickupTask", hit);
-                    break;
-            }
-
+        unitControl.deselectUnits();
+        _mouseMode = MouseMode.none;
+        targetLayer = 1 << 16;
     }
 
     private void updateSelectField()
@@ -71,7 +128,7 @@ public class MouseControl : MonoBehaviour
     {
         if (isMouseHeld())
         {
-            mouseIsPressed = false;
+            _mouseIsPressed = false;
 
         }
 
@@ -79,10 +136,10 @@ public class MouseControl : MonoBehaviour
 
     private bool isMouseHeld()
     {
-        if (timeMouseHeld >= timeToHoldMouse)
+        if (_timeMouseHeld >= _timeToHoldMouse)
             return true;
         else
-            timeMouseHeld += Time.deltaTime;
+            _timeMouseHeld += Time.deltaTime;
 
         return false;
     }
@@ -99,7 +156,13 @@ public class MouseControl : MonoBehaviour
 
     private GameObject getRayTarget(Vector3 mousePosition)
     {
-        Physics.Raycast(ScreenToRay(mousePosition), out RaycastHit hit);
-        return hit.transform.gameObject;
+        if (Physics.Raycast(ScreenToRay(mousePosition), out RaycastHit hit))
+        {
+            return hit.transform.gameObject;
+        }
+
+        return null;
     }
+
+    
 }

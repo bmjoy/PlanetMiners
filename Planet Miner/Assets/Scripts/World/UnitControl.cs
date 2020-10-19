@@ -56,7 +56,8 @@ public class UnitControl : MonoBehaviour
                 break;
 
             case "DropTask":
-
+                foreach (Unit unit in _selectedUnits)
+                    unit.changeTask(new DropTask());
                 break;
         }
     }

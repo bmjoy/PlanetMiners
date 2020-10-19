@@ -87,9 +87,10 @@ GameObject:
   - component: {fileID: 8882492864021423174}
   - component: {fileID: 5201962907573956060}
   - component: {fileID: 6056687959688290575}
+  - component: {fileID: 6964109548214738414}
   m_Layer: 5
   m_Name: ActionButton
-  m_TagString: Untagged
+  m_TagString: ActionButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -192,12 +193,26 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 5201962907573956060}
+  m_TargetGraphic: {fileID: 4755182873141830289}
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &6964109548214738414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4018546680196812683}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f954675ba8a2e8d4493cc8aa00bd152c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetTag: 
+  actionType: 0
 --- !u!1 &5784603370231961348
 GameObject:
   m_ObjectHideFlags: 0
