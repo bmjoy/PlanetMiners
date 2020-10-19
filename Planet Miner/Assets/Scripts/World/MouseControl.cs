@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class MouseControl : MonoBehaviour
 {
@@ -71,7 +72,7 @@ public class MouseControl : MonoBehaviour
                         break;
 
                     case "Wall":
-                        //unitControl.assignTaskToSelected("DrillTask", hit);
+                        unitControl.assignTaskToSelected("DrillTask", hit);
                         break;
 
                     case "Resource":
@@ -162,6 +163,11 @@ public class MouseControl : MonoBehaviour
         }
 
         return null;
+    }
+
+    public void changePointer(Texture2D cursorTexture)
+    {
+        Cursor.SetCursor(cursorTexture, new Vector2(0, 0), CursorMode.Auto);
     }
 
     
