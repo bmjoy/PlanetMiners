@@ -13,6 +13,7 @@ public class Drop : State
     }
     public override void run()
     {
+        GameObject.FindObjectOfType<TerrainControl>().addResourceToList(_unit.inventory.itemInHand().GetComponent<Resource>());
         _unit.inventory.dropItem();
     }
 }

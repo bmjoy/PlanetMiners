@@ -35,7 +35,10 @@ public class WorldControl : MonoBehaviour
     IEnumerator taskSystemLoop()
     {
         yield return new WaitForSeconds(taskSystemLoopTime);
+        
         taskSystem.asignTasks(terrainControl.getUnits());
         StartCoroutine(taskSystemLoop());
     }
+
+   
 }

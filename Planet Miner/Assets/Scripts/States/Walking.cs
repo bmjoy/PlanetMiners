@@ -21,6 +21,9 @@ public class Walking : State
     }
     public override void run()
     {
+        if (_path == null)
+            _unit.changeState(new Idle());
+
         if (_pathIndex < _path.Count)
         {
             _currentGoal = _path[_pathIndex];

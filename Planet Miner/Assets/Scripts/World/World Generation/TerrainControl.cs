@@ -40,11 +40,9 @@ public class TerrainControl : MonoBehaviour
     private List<Wall> wallObjects = new List<Wall>();
     private List<Node> nodeObjects = new List<Node>();
 
+    private List<Resource> resourceObjects = new List<Resource>();
 
-    public List<Unit> getUnits()
-    {
-        return units;
-    }
+
     public void generateWorld()
     {
         offsetX = UnityEngine.Random.Range(0, 1000);
@@ -117,6 +115,7 @@ public class TerrainControl : MonoBehaviour
                     worldMap[x, z].name = "Ground" + x + "," + z;
 
                     GameObject u = Instantiate(unitPrefab, new Vector3(x, 1, z), Quaternion.identity, this.transform);
+                    units.Add(u.GetComponent<Unit>());
                     unitcount++;
 
                 }
@@ -318,15 +317,15 @@ public class TerrainControl : MonoBehaviour
         {
             for (int z = startz; z < endz; z++)
             {
-                
-                if (worldMap[x, z].TryGetComponent<Wall>(out  Wall wall))
+
+                if (worldMap[x, z].TryGetComponent<Wall>(out Wall wall))
                 {
                     GameObject[] neighbours = findNeighbours(worldMap, x, z);
 
                     wall.setNeighbours(neighbours);
 
-                    if(wall.neighbours["left"] != null && wall.neighbours["right"] != null)
-                        if(wall.neighbours["left"].CompareTag("Ground") && wall.neighbours["right"].CompareTag("Ground"))
+                    if (wall.neighbours["left"] != null && wall.neighbours["right"] != null)
+                        if (wall.neighbours["left"].CompareTag("Ground") && wall.neighbours["right"].CompareTag("Ground"))
                         {
                             Destroy(wall.gameObject);
                             worldMap[x, z] = Instantiate(grounds[0], new Vector3(x, 0, z), Quaternion.identity, this.transform);
@@ -672,6 +671,10 @@ public class TerrainControl : MonoBehaviour
         replaceX = (int)oldObj.transform.position.x;
         replaceZ = (int)oldObj.transform.position.z;
 
+        if (oldObj.TryGetComponent<Wall>(out Wall w))
+            if (w.dropObject != null)
+                spawnResource(w.dropObject, (int)w.transform.position.x, (int)w.transform.position.z);
+
         Destroy(oldObj);
 
         worldMap[replaceX, replaceZ] = Instantiate(replaceObject, new Vector3(replaceX, 0, replaceZ), Quaternion.identity, this.transform);
@@ -716,7 +719,32 @@ public class TerrainControl : MonoBehaviour
         Pathfinding.checkForNewConnections();
     }
 
+    public void spawnResource(GameObject resource, int x, int z)
+    {
+        if (!resourceObjects.Contains(resource.GetComponent<Resource>()))
+        {
+            GameObject go = Instantiate(resource, new Vector3(x, 0.5f, z), Quaternion.identity, transform);
+            resourceObjects.Add(go.GetComponent<Resource>());
+        }
+    }
 
+    public void removeResourceFromList(Resource resource)
+    {
+        Debug.Log($"Removed {resource.name} from resource list");
+
+        resourceObjects.Remove(resource);
+    }
+
+    public void addResourceToList(Resource resource)
+    {
+        Debug.Log($"Added {resource.name} to resource list");
+        resourceObjects.Add(resource);
+    }
+
+    public List<Unit> getUnits()
+    {
+        return units;
+    }
 
     public List<Ground> getAllGroundObjects()
     {
@@ -744,5 +772,10 @@ public class TerrainControl : MonoBehaviour
                 if (!nodeObjects.Contains(n))
                     nodeObjects.Add(n);
         return nodeObjects;
+    }
+
+    public List<Resource> getAllResources()
+    {
+        return resourceObjects;
     }
 }

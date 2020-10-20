@@ -1,7 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class TaskSystem
 {
     private Queue<Task> globalQueue = new Queue<Task>();
@@ -25,6 +27,14 @@ public class TaskSystem
                 unit.changeTask(globalQueue.Dequeue());
             else
                 return;
+        }
+    }
+
+    public void createHaulTask(List<Resource> list)
+    {
+        foreach(Resource r in list)
+        {
+            enqueTask(new HaulTask(r.gameObject, r.transform.position - Vector3.back));
         }
     }
 }

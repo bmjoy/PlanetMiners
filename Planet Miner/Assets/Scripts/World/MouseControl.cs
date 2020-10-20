@@ -104,7 +104,6 @@ public class MouseControl : MonoBehaviour
             case MouseMode.waitingForTarget:
                 unitControl.assignTaskToSelected(lastButtonPressed.taskName, hit);
                 _mouseMode = MouseMode.unitSelected;
-                changePointer(arrowCursor);
                 break;
         }
 
@@ -121,7 +120,6 @@ public class MouseControl : MonoBehaviour
         unitControl.deselectUnits();
         _mouseMode = MouseMode.none;
         targetLayer = 1 << 16;
-        changePointer(arrowCursor);
 
     }
 

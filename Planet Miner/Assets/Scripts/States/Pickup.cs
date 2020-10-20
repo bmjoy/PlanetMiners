@@ -15,5 +15,6 @@ public class Pickup : State
     public override void run()
     {
         _unit.inventory.pickUpItem(_resource.gameObject);
+        GameObject.FindObjectOfType<TerrainControl>().removeResourceFromList(_resource);
     }
 }

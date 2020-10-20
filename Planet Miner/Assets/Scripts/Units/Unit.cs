@@ -40,6 +40,7 @@ public class Unit : MonoBehaviour
 
         if (_state != null)
             _state.run();
+
     }
 
     private bool checkTaskFinished()
@@ -70,6 +71,8 @@ public class Unit : MonoBehaviour
         _task.unit = this;
 
         _task.start();
+
+        Debug.Log($"Changed task to {_task.ToString()}");
     }
 
     public bool hasTask
