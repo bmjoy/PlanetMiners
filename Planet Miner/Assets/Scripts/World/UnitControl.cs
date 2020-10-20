@@ -59,6 +59,11 @@ public class UnitControl : MonoBehaviour
                 foreach (Unit unit in _selectedUnits)
                     unit.changeTask(new DropTask());
                 break;
+            case "DigTask":
+                Rubble rubble = target.GetComponent<Rubble>();
+                foreach (Unit unit in _selectedUnits)
+                    unit.changeTask(new DigTask(rubble,1));
+                break;
         }
     }
     public bool hasUnitsSelected()

@@ -4,17 +4,12 @@ using UnityEngine;
 
 public class Wall : WorldBlock
 {
-    public GameObject dropObject;
-
-    public override void destroyed()
-    {
-        
-    }
+    public GameObject rubbleObject;
 
     private void Start()
     {
         health = 5;
     }
-    
-    
+
+
 }

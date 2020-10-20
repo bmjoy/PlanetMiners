@@ -42,7 +42,7 @@ public class MouseControl : MonoBehaviour
             if (isMouseHeld())
                 updateSelectField();
             else
-                leftClick(getRayTarget(Input.mousePosition));
+                leftClick();
 
         if (Input.GetMouseButtonDown(1))
             righClick();
@@ -51,8 +51,10 @@ public class MouseControl : MonoBehaviour
             mouseUp();
     }
 
-    public void leftClick(GameObject hit)
+    public void leftClick()
     {
+        GameObject hit = getRayTarget(Input.mousePosition);
+
         if (hit == null)
             return;
 
@@ -67,6 +69,8 @@ public class MouseControl : MonoBehaviour
                 break;
 
             case MouseMode.unitSelected:
+                if (isMouseOnUI())
+                    return;
                 switch (hit.tag)
                 {
                     case "Ground":
@@ -80,23 +84,8 @@ public class MouseControl : MonoBehaviour
                     case "Resource":
                         unitControl.assignTaskToSelected("PickupTask", hit);
                         break;
-
-                    case "ActionButton":
-                        ActionButton actionButton = hit.GetComponent<ActionButton>();
-                        lastButtonPressed = actionButton;
-
-                        if (actionButton.actionType.Equals(ActionButton.ActionType.needTarget))
-                        {
-                            _mouseMode = MouseMode.waitingForTarget;
-
-                            targetLayer = actionButton.targetLayer;
-
-                            
-                        }
-                        else if (actionButton.actionType.Equals(ActionButton.ActionType.instant))
-                        {
-                            unitControl.assignTaskToSelected(lastButtonPressed.taskName, null);
-                        }
+                    case "Rubble":
+                        unitControl.assignTaskToSelected("DigTask", hit);
                         break;
                 }
 
@@ -108,6 +97,27 @@ public class MouseControl : MonoBehaviour
         }
 
 
+    }
+
+    public void clickedActionButton(ActionButton actionButton)
+    {
+        lastButtonPressed = actionButton;
+
+        if (actionButton.actionType.Equals(ActionButton.ActionType.needTarget))
+        {
+            _mouseMode = MouseMode.waitingForTarget;
+
+            targetLayer = actionButton.targetLayer;
+        }
+        else if (actionButton.actionType.Equals(ActionButton.ActionType.instant))
+        {
+            unitControl.assignTaskToSelected(lastButtonPressed.taskName, null);
+        }
+    }
+
+    private bool isMouseOnUI()
+    {
+        return EventSystem.current.IsPointerOverGameObject();
     }
 
     private void mouseHold()
@@ -148,19 +158,19 @@ public class MouseControl : MonoBehaviour
         return false;
     }
 
-    private Ray ScreenToRay(Vector3 mousePosition)
+    private Ray screenToRay(Vector3 mousePosition)
     {
         return worldCamera.ScreenPointToRay(mousePosition);
     }
 
-    private Vector3 ScreenToWorld(Vector3 mousePosition)
+    private Vector3 screenToWorld(Vector3 mousePosition)
     {
         return worldCamera.ScreenToWorldPoint(mousePosition);
     }
 
     private GameObject getRayTarget(Vector3 mousePosition)
     {
-        if (Physics.Raycast(ScreenToRay(mousePosition), out RaycastHit hit))
+        if (Physics.Raycast(screenToRay(mousePosition), out RaycastHit hit))
         {
             return hit.transform.gameObject;
         }

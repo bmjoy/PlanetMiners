@@ -22,7 +22,10 @@ public class Walking : State
     public override void run()
     {
         if (_path == null)
+        {
             _unit.changeState(new Idle());
+            return;
+        }
 
         if (_pathIndex < _path.Count)
         {

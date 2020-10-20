@@ -672,8 +672,8 @@ public class TerrainControl : MonoBehaviour
         replaceZ = (int)oldObj.transform.position.z;
 
         if (oldObj.TryGetComponent<Wall>(out Wall w))
-            if (w.dropObject != null)
-                spawnResource(w.dropObject, (int)w.transform.position.x, (int)w.transform.position.z);
+            if (w.rubbleObject != null)
+                spawnRubble(w, (int)w.transform.position.x, (int)w.transform.position.z);
 
         Destroy(oldObj);
 
@@ -718,6 +718,21 @@ public class TerrainControl : MonoBehaviour
 
         Pathfinding.checkForNewConnections();
     }
+    public void spawnRubble(Wall wall, int x, int z)
+    {
+        GameObject rubble = wall.rubbleObject;
+        Instantiate(rubble, new Vector3(x, 0, z), Quaternion.identity, transform);
+    }
+
+    public void removeRubble(Rubble rubble)
+    {
+        if (rubble.resourceDropChance <= UnityEngine.Random.Range(0, 1f) || rubble.resourceDropChance == 1f)
+        {
+            GameObject resource = rubble.dropResource;
+            spawnResource(resource, (int)rubble.transform.position.x, (int)rubble.transform.position.z);
+        }
+            Destroy(rubble.gameObject);
+    }
 
     public void spawnResource(GameObject resource, int x, int z)
     {
@@ -730,14 +745,11 @@ public class TerrainControl : MonoBehaviour
 
     public void removeResourceFromList(Resource resource)
     {
-        Debug.Log($"Removed {resource.name} from resource list");
-
         resourceObjects.Remove(resource);
     }
 
     public void addResourceToList(Resource resource)
     {
-        Debug.Log($"Added {resource.name} to resource list");
         resourceObjects.Add(resource);
     }
 

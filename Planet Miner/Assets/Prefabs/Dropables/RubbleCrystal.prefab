@@ -11,9 +11,11 @@ GameObject:
   - component: {fileID: 7115952161039037966}
   - component: {fileID: 2277685026649312312}
   - component: {fileID: 5523523232795422913}
+  - component: {fileID: 2773544334379986152}
+  - component: {fileID: 1502703891946643577}
   m_Layer: 15
-  m_Name: Rubble
-  m_TagString: Untagged
+  m_Name: RubbleCrystal
+  m_TagString: Rubble
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -78,3 +80,31 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &2773544334379986152
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6096652411910308893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f3f7b4139f2c6d4b9dee8c3babcf8aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dropResource: {fileID: 2241765237019064431, guid: fcd510ef5a163df4295bca740ca2a6a4,
+    type: 3}
+  resourceDropChance: 1
+--- !u!65 &1502703891946643577
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6096652411910308893}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.937153, y: 0.105076, z: 0.869845}
+  m_Center: {x: 0.0022255033, y: 0.052538, z: 0.009437501}

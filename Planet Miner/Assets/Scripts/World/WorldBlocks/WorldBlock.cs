@@ -21,8 +21,6 @@ public abstract class WorldBlock : MonoBehaviour
         _health -= damage;
     }
 
-    public abstract void destroyed();
-
     public Dictionary<string,GameObject> neighbours { get => _neighbours; }
     
 

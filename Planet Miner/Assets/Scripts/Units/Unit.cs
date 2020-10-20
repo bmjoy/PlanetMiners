@@ -72,7 +72,6 @@ public class Unit : MonoBehaviour
 
         _task.start();
 
-        Debug.Log($"Changed task to {_task.ToString()}");
     }
 
     public bool hasTask

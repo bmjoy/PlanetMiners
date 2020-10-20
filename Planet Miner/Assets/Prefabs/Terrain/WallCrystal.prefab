@@ -94,8 +94,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a90deced9241054fab551e71ba2c6d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropObject: {fileID: 2241765237019064431, guid: fcd510ef5a163df4295bca740ca2a6a4,
+  rubbleObject: {fileID: 6096652411910308893, guid: 804463f7cd67e7f43942301bba299215,
     type: 3}
+  rubbleDropChance: 1
 --- !u!65 &-6417899453193910256
 BoxCollider:
   m_ObjectHideFlags: 0
