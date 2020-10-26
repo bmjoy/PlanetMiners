@@ -184,8 +184,10 @@ public class TerrainControl : MonoBehaviour
             }
         }
 
-
         _noiseMap[centerx + (int)startAreaSize / 2, centerz + (int)startAreaSize / 2] = 3;
+        _noiseMap[centerx + (int)startAreaSize / 2 + 1, centerz + (int)startAreaSize / 2] = 3;
+
+
 
         //force double walls
         for (int x = 0; x < worldWidth; x++)
