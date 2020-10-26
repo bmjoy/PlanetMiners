@@ -60,7 +60,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 8507789265930873676, guid: 90cef27ac06ac8746a07d2201ea900bb, type: 3}
-  - {fileID: -7393093796677544362, guid: 90cef27ac06ac8746a07d2201ea900bb, type: 3}
+  - {fileID: 2100000, guid: 65c3a1ac57be5ab42b216e3e57c67db7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -95,7 +95,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rubbleObject: {fileID: 6096652411910308893, guid: f73f53068fc0a8a47af1f21b2917b95d,
     type: 3}
-  rubbleDropChance: 0.3
 --- !u!65 &2786695753968925927
 BoxCollider:
   m_ObjectHideFlags: 0
