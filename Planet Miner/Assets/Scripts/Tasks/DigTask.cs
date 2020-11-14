@@ -14,6 +14,7 @@ public class DigTask : Task
     {
         _rubble = rubble;
         _digDamage = digDamage;
+        _multipleMode = true;
     }
     public override void execute()
     {
@@ -23,6 +24,9 @@ public class DigTask : Task
             rubbleCleared = true;
         }
         else
+        if (_rubble == null)
+            end();
+
         if (unit.isAtPosition(_rubble.transform.position))
         {
             _rubble.doDamage(_digDamage);

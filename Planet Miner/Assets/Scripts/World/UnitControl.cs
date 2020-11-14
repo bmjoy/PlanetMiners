@@ -22,7 +22,8 @@ public class UnitControl : MonoBehaviour
 
     public void selectMultipleUnits(List<Unit> units)
     {
-
+        foreach (Unit unit in units)
+            selectSingleUnit(unit);
     }
 
     public void deselectUnits()
@@ -35,39 +36,53 @@ public class UnitControl : MonoBehaviour
 
     public void assignTaskToSelected(string task, GameObject target)
     {
+        Task taskToAssign = null;
+
         switch (task)
         {
             case "WalkTask":
                 Vector3 targetPos = target.transform.position;
-                foreach (Unit unit in _selectedUnits)
-                    unit.changeTask(new WalkTask(targetPos));
+                taskToAssign = new WalkTask(targetPos);
                 break;
 
             case "DrillTask":
                 Wall targetWall = target.GetComponent<Wall>();
-                foreach (Unit unit in _selectedUnits)
-                    unit.changeTask(new DrillTask(targetWall));
+                taskToAssign = new DrillTask(targetWall);
                 break;
 
             case "PickupTask":
                 Resource resource = target.GetComponent<Resource>();
-                foreach (Unit unit in _selectedUnits)
-                    unit.changeTask(new PickupTask(resource));
+                taskToAssign = new PickupTask(resource);
                 break;
 
             case "DropTask":
-                foreach (Unit unit in _selectedUnits)
-                    unit.changeTask(new DropTask());
+                taskToAssign = new DropTask();
                 break;
+
             case "DigTask":
                 Rubble rubble = target.GetComponent<Rubble>();
-                foreach (Unit unit in _selectedUnits)
-                    unit.changeTask(new DigTask(rubble,1));
+                taskToAssign = new DigTask(rubble, 1);
                 break;
+        }
+
+        if (taskToAssign == null)
+            return;
+
+        foreach (Unit unit in _selectedUnits)
+        {
+            unit.changeTask(taskToAssign.clone());
+
+            if (!taskToAssign.multipleMode)
+                return;
         }
     }
     public bool hasUnitsSelected()
     {
         return (_selectedUnits.Count > 0);
+    }
+
+    public List<Unit> units()
+    {
+        return _units;
     }
 }

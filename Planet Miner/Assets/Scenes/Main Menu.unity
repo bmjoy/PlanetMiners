@@ -1795,12 +1795,12 @@ PrefabInstance:
     - target: {fileID: 1922891293172719831, guid: 3b2e40b3bcda2934884ddc9b13a8ba9e,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1922891293172719831, guid: 3b2e40b3bcda2934884ddc9b13a8ba9e,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1922891293172719831, guid: 3b2e40b3bcda2934884ddc9b13a8ba9e,
         type: 3}
@@ -1811,22 +1811,22 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2047661998}
     - target: {fileID: 1922891293172719831, guid: 3b2e40b3bcda2934884ddc9b13a8ba9e,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Play
+      value: toggleMenu
       objectReference: {fileID: 0}
     - target: {fileID: 1922891293172719831, guid: 3b2e40b3bcda2934884ddc9b13a8ba9e,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
+      value: UnityEngine.GameObject, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 1922891293172719831, guid: 3b2e40b3bcda2934884ddc9b13a8ba9e,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1668388436}
     - target: {fileID: 1922891293172719831, guid: 3b2e40b3bcda2934884ddc9b13a8ba9e,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode

@@ -11,6 +11,7 @@ public class DrillTask : Task
     {
         _targetWall = wall;
         findWallGround();
+        _multipleMode = true;
     }
 
     public override void start()
@@ -44,13 +45,17 @@ public class DrillTask : Task
                 break;
             }
         }
+        if (_groundNextToWall == null && unit != null)
+            end();
         return;
     }
 
     private bool isNextToWall()
     {
-        if (_groundNextToWall.Equals(null))
+        if (_groundNextToWall == null)
             findWallGround();
+
+        Debug.Log("drilltask for " + unit);
 
         return unit.isAtPosition(_groundNextToWall.transform.position);
     }

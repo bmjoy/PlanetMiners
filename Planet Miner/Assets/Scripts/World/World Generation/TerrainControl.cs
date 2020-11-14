@@ -115,6 +115,7 @@ public class TerrainControl : MonoBehaviour
                     worldMap[x, z].name = "Ground" + x + "," + z;
 
                     GameObject u = Instantiate(unitPrefab, new Vector3(x, 1, z), Quaternion.identity, this.transform);
+                    u.name = "unit " + unitcount;
                     units.Add(u.GetComponent<Unit>());
                     unitcount++;
 

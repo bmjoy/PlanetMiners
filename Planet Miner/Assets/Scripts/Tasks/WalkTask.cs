@@ -10,6 +10,7 @@ public class WalkTask : Task
     public WalkTask(Vector3 targetposition)
     {
         _targetPosition = targetposition;
+        _multipleMode = true;
     }
     public override void execute()
     {

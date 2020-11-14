@@ -14,6 +14,8 @@ public class Unit : MonoBehaviour
 
     public Inventory _inventory;
 
+    public string taskname;
+
     public float moveSpeed
     {
         get { return _moveSpeed * Time.deltaTime; }
@@ -67,11 +69,15 @@ public class Unit : MonoBehaviour
         if (_task != null)
             _task.end();
 
+
         _task = task;
         _task.unit = this;
 
-        _task.start();
+        checkTaskFinished();
 
+        taskname = _task.ToString();
+
+        _task.start();
     }
 
     public bool hasTask

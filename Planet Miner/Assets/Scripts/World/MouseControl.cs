@@ -11,17 +11,28 @@ public class MouseControl : MonoBehaviour
     public UnitControl unitControl;
 
     private bool _mouseIsPressed = false;
+    [SerializeField]
     private float _timeMouseHeld;
-    private float _timeToHoldMouse = 3f;
+    [SerializeField]
+    private float _timeToHoldMouse = 1f;
 
     private MouseMode _mouseMode = MouseMode.none;
 
     public LayerMask targetLayer;
 
-
     private ActionButton lastButtonPressed = null;
 
     public Texture2D arrowCursor;
+
+    [Header("Selection rect")]
+    public RectTransform selectionRect;
+    [Header("Selection Positions")]
+    [SerializeField]
+    private Vector2 _selectionStartPosition;
+    [SerializeField]
+    private Vector2 _selectionEndPosition;
+
+
 
     private void Start()
     {
@@ -39,10 +50,12 @@ public class MouseControl : MonoBehaviour
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))
-            if (isMouseHeld())
-                updateSelectField();
-            else
+            if (!isMouseHeld())
                 leftClick();
+
+        if (Input.GetMouseButton(0))
+            if (isMouseHeld())
+                updateSelectField(Input.mousePosition);
 
         if (Input.GetMouseButtonDown(1))
             righClick();
@@ -54,6 +67,8 @@ public class MouseControl : MonoBehaviour
     public void leftClick()
     {
         GameObject hit = getRayTarget(Input.mousePosition);
+
+        _selectionStartPosition = Input.mousePosition;
 
         if (hit == null)
             return;
@@ -71,8 +86,14 @@ public class MouseControl : MonoBehaviour
             case MouseMode.unitSelected:
                 if (isMouseOnUI())
                     return;
+
                 switch (hit.tag)
                 {
+                    case "Unit":
+                        unitControl.deselectUnits();
+                        unitControl.selectSingleUnit(hit.transform.GetComponent<Unit>());
+                        _mouseMode = MouseMode.unitSelected;
+                        break;
                     case "Ground":
                         unitControl.assignTaskToSelected("WalkTask", hit);
                         break;
@@ -133,20 +154,55 @@ public class MouseControl : MonoBehaviour
 
     }
 
-    private void updateSelectField()
+    private void updateSelectField(Vector3 mousePosition)
     {
+        if (!selectionRect.gameObject.activeInHierarchy)
+            selectionRect.gameObject.SetActive(true);
 
+        float width = mousePosition.x - _selectionStartPosition.x;
+        float height = mousePosition.y - _selectionStartPosition.y;
+
+        selectionRect.sizeDelta = new Vector2(Mathf.Abs(width), Mathf.Abs(height));
+        selectionRect.anchoredPosition = _selectionStartPosition + new Vector2(width / 2, height / 2);
     }
 
     private void mouseUp()
     {
         if (isMouseHeld())
         {
+            unitControl.deselectUnits();
+
+            selectionRect.gameObject.SetActive(false);
+
             _mouseIsPressed = false;
 
-        }
+            Vector2 minPos = selectionRect.anchoredPosition - (selectionRect.sizeDelta / 2);
+            Vector2 maxPos = selectionRect.anchoredPosition + (selectionRect.sizeDelta / 2);
 
+            List<Unit> selected = new List<Unit>();
+
+            foreach (Unit unit in unitControl.units())
+            {
+                Vector3 screenpos = Camera.main.WorldToScreenPoint(unit.transform.position);
+
+                if (screenpos.x > minPos.x && screenpos.x < maxPos.x
+                    && screenpos.y > minPos.y && screenpos.y < maxPos.y)
+                {
+                    selected.Add(unit);
+                }
+            }
+
+            unitControl.selectMultipleUnits(selected);
+            if (unitControl.hasUnitsSelected())
+                _mouseMode = MouseMode.unitSelected;
+            else
+                _mouseMode = MouseMode.none;
+
+            _selectionEndPosition = new Vector3(0, 0, 0);
+        }
+        _timeMouseHeld = 0;
     }
+
 
     private bool isMouseHeld()
     {
@@ -184,5 +240,5 @@ public class MouseControl : MonoBehaviour
         Cursor.SetCursor(cursorTexture, new Vector2(0, 0), CursorMode.Auto);
     }
 
-    
+
 }
