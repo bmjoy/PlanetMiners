@@ -156,4 +156,9 @@ public class Pathfinding
 
         }
     }
+
+    public static bool checkForPath(Vector3 startpos,  Vector3 endpos)
+    {
+        return (findPath(startpos, endpos) != null);
+    }
 }
