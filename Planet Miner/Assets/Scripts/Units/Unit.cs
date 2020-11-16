@@ -8,14 +8,19 @@ public class Unit : MonoBehaviour
     [SerializeField]
     private float _moveSpeed = 5f;
 
-    private State _state = new Idle();
+    private State _state;
 
     private Task _task = null;
 
     public Inventory _inventory;
 
     public string taskname;
+    public string statename;
 
+    private void Start()
+    {
+        _state = new Idle();
+    }
     public float moveSpeed
     {
         get { return _moveSpeed * Time.deltaTime; }
@@ -33,24 +38,39 @@ public class Unit : MonoBehaviour
 
     private void Update()
     {
+        runTask();
+
+        runState();
+
+        if (_task != null)
+            taskname = _task.ToString();
+        if (_state != null)
+            statename = _state.ToString();
+    }
+
+    private void runTask()
+    {
         if (_task == null)
+            return;
+
+        if (checkTaskFinished())
             return;
 
         _task.execute();
 
-        checkTaskFinished();
+    }
 
+    private void runState()
+    {
         if (_state != null)
             _state.run();
-
     }
 
     private bool checkTaskFinished()
     {
         if (_task.isFinished())
         {
-            _task.end();
-            _task = null;
+            endTask();
             return true;
         }
         return false;
@@ -67,27 +87,36 @@ public class Unit : MonoBehaviour
             return;
 
         if (_task != null)
-            _task.end();
-
+            endTask();
 
         _task = task;
         _task.unit = this;
 
         checkTaskFinished();
 
-        taskname = _task.ToString();
+
 
         _task.start();
+    }
+
+    public void endTask()
+    {
+        _task.end();
+        _task = null;
+        changeState(new Idle());
+        taskname = "";
     }
 
     public bool hasTask
     {
         get => (_task != null);
     }
+    public Task task { get => _task; }
 
     public void changeState(State state)
     {
         _state = state;
+
     }
 
     public bool isAtPosition(Vector3 pos)
