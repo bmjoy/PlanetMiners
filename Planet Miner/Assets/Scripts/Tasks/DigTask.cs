@@ -10,10 +10,9 @@ public class DigTask : Task
     private bool rubbleCleared = false;
 
 
-    public DigTask(Rubble rubble, float digDamage)
+    public DigTask(Rubble rubble)
     {
         _rubble = rubble;
-        _digDamage = digDamage;
         _multipleMode = true;
     }
     public override void execute()
@@ -40,6 +39,7 @@ public class DigTask : Task
 
     public override void start()
     {
+        _digDamage = 1f;
         unit.changeState(new Walking(unit.transform.position, _rubble.transform.position, unit));
     }
 }
