@@ -25,7 +25,7 @@ public class DrillTask : Task
         }
 
         if (isNextToWall())
-            unit.changeState(new Drilling(_targetWall, 1, unit));
+            unit.changeState(new Drilling(_targetWall, 1));
         else
         {
             if (Pathfinding.checkForPath(unit.transform.position, _groundNextToWall.transform.position))
@@ -41,7 +41,7 @@ public class DrillTask : Task
     public override void execute()
     {
         if (isNextToWall() && unit.getState().GetType() != typeof(Drilling))
-            unit.changeState(new Drilling(_targetWall, 1, unit));
+            unit.changeState(new Drilling(_targetWall, 1));
     }
 
     public override bool isFinished()

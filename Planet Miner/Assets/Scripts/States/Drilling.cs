@@ -6,11 +6,10 @@ public class Drilling : State
 {
     private Wall _targetWall;
     private float _drillDamage;
-    private Unit _unit;
 
-    public Drilling(Wall targetWall, float drillDamage, Unit unit)
+
+    public Drilling(Wall targetWall, float drillDamage)
     {
-        _unit = unit;
         _targetWall = targetWall;
         _drillDamage = drillDamage;
     }
