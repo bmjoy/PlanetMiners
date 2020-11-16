@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class Task
 {
     private Unit _unit;
-    protected bool taskEnded = false;
+    protected bool _taskEnded = false;
 
     protected bool _multipleMode = false;
     public Unit unit
