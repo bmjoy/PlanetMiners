@@ -37,4 +37,32 @@ public class TaskSystem
             enqueTask(new HaulTask(r.gameObject, r.transform.position - Vector3.back));
         }
     }
+
+    public static WalkTask createWalkTask(Vector3 targetPosition)
+    {
+        return new WalkTask(targetPosition);
+    }
+
+    public static DrillTask createDrillTask(Wall wall)
+    {
+        return new DrillTask(wall);
+    }
+
+    public static PickupTask createPickupTask(Resource resource)
+    {
+        return new PickupTask(resource);
+    }
+
+    public static DropTask createDropTask()
+    {
+        return new DropTask();
+    }
+
+    public static DigTask createDigTask(Rubble rubble )
+    {
+        return new DigTask(rubble);
+    }
+
+
+
 }

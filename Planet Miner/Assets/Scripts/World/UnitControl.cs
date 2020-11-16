@@ -36,44 +36,64 @@ public class UnitControl : MonoBehaviour
 
     public void assignTaskToSelected(string task, GameObject target)
     {
-        Task taskToAssign = null;
-
         switch (task)
         {
             case "WalkTask":
                 Vector3 targetPos = target.transform.position;
-                taskToAssign = new WalkTask(targetPos);
+                foreach (Unit unit in _selectedUnits)
+                {
+                    unit.changeTask(TaskSystem.createWalkTask(targetPos));
+
+                    if (!unit.task.multipleMode)
+                        return;
+                }
+
                 break;
 
             case "DrillTask":
                 Wall targetWall = target.GetComponent<Wall>();
-                taskToAssign = new DrillTask(targetWall);
+
+                foreach (Unit unit in _selectedUnits)
+                {
+                    unit.changeTask(TaskSystem.createDrillTask(targetWall));
+
+                    if (!unit.task.multipleMode)
+                        return;
+                }
+
                 break;
 
             case "PickupTask":
                 Resource resource = target.GetComponent<Resource>();
-                taskToAssign = new PickupTask(resource);
+                foreach (Unit unit in _selectedUnits)
+                {
+                    unit.changeTask(TaskSystem.createPickupTask(resource));
+
+                    if (!unit.task.multipleMode)
+                        return;
+                }
                 break;
 
             case "DropTask":
-                taskToAssign = new DropTask();
+                foreach (Unit unit in _selectedUnits)
+                {
+                    unit.changeTask(TaskSystem.createDropTask());
+
+                    if (!unit.task.multipleMode)
+                        return;
+                }
                 break;
 
             case "DigTask":
                 Rubble rubble = target.GetComponent<Rubble>();
-                taskToAssign = new DigTask(rubble, 1);
+                foreach (Unit unit in _selectedUnits)
+                {
+                    unit.changeTask(TaskSystem.createDigTask(rubble));
+
+                    if (!unit.task.multipleMode)
+                        return;
+                }
                 break;
-        }
-
-        if (taskToAssign == null)
-            return;
-
-        foreach (Unit unit in _selectedUnits)
-        {
-            unit.changeTask(taskToAssign.clone());
-
-            if (!taskToAssign.multipleMode)
-                return;
         }
     }
     public bool hasUnitsSelected()
