@@ -21,7 +21,7 @@ public abstract class Task
 
     public virtual void end()
     {
-        _unit.changeState(new Idle());
+        
     }
 
     public abstract bool isFinished();
