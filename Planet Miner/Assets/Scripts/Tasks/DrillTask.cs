@@ -17,29 +17,39 @@ public class DrillTask : Task
 
     public override void start()
     {
-        if (!isNextToWall())
+        findWallGround();
+        if (_groundNextToWall == null)
+        {
+            _taskEnded = true;
+            return;
+        }
+
+        if (isNextToWall())
+            unit.changeState(new Drilling(_targetWall, 1, unit));
+        else
         {
             if (Pathfinding.checkForPath(unit.transform.position, _groundNextToWall.transform.position))
                 unit.changeState(new Walking(unit.transform.position, _groundNextToWall.transform.position, unit));
             else
-                end();
+            {
+                _taskEnded = true;
+                return;
+            }
         }
-
-        else
-            unit.changeState(new Drilling(_targetWall, 1, unit));
     }
 
     public override void execute()
     {
-        if (taskEnded) return;
-
         if (isNextToWall() && unit.getState().GetType() != typeof(Drilling))
             unit.changeState(new Drilling(_targetWall, 1, unit));
     }
 
     public override bool isFinished()
     {
-        return (_targetWall == null);
+        if (_targetWall == null || _taskEnded)
+            return true;
+
+        return false;
     }
 
     private void findWallGround()
@@ -64,15 +74,10 @@ public class DrillTask : Task
 
         if (nearestGround != null)
             _groundNextToWall = nearestGround.GetComponent<Ground>();
-
-
-        if (_groundNextToWall == null)
-            end();
     }
 
     private bool isNextToWall()
     {
-        findWallGround();
         return unit.isAtPosition(_groundNextToWall.transform.position);
     }
 }
