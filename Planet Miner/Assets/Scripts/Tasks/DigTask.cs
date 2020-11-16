@@ -7,7 +7,6 @@ public class DigTask : Task
 
     private Rubble _rubble;
     private float _digDamage;
-    private bool rubbleCleared = false;
 
 
     public DigTask(Rubble rubble)
@@ -15,31 +14,32 @@ public class DigTask : Task
         _rubble = rubble;
         _multipleMode = true;
     }
+
+    public override void start()
+    {
+        _digDamage = 1f;
+
+        if (Pathfinding.checkForPath(unit.transform.position, _rubble.transform.position))
+            unit.changeState(new Walking(unit.transform.position, _rubble.transform.position, unit));
+        else
+            _taskEnded = true;
+    }
+
     public override void execute()
     {
-        if (_rubble.health <= 0 && !rubbleCleared)
+        if (unit.isAtPosition(_rubble.transform.position) && unit.getState().GetType() != typeof(Digging))
         {
-            GameObject.FindObjectOfType<TerrainControl>().removeRubble(_rubble);
-            rubbleCleared = true;
-        }
-        else
-        if (_rubble == null)
-            end();
-
-        if (unit.isAtPosition(_rubble.transform.position))
-        {
-            _rubble.doDamage(_digDamage);
+            unit.changeState(new Digging(_rubble, _digDamage));
         }
     }
 
     public override bool isFinished()
     {
-        return rubbleCleared;
+        if (_rubble == null || _taskEnded)
+            return true;
+
+        return false;
     }
 
-    public override void start()
-    {
-        _digDamage = 1f;
-        unit.changeState(new Walking(unit.transform.position, _rubble.transform.position, unit));
-    }
+
 }
