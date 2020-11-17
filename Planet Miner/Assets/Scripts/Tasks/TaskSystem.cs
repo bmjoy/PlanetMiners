@@ -24,7 +24,7 @@ public class TaskSystem
         foreach (Unit unit in units)
         {
             if (globalQueue.Count > 0 && !unit.hasTask)
-                unit.changeTask(globalQueue.Dequeue());
+                unit.enqueueTask(globalQueue.Dequeue());
             else
                 return;
         }

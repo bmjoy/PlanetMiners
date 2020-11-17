@@ -18,16 +18,19 @@ public class DigTask : Task
     public override void start()
     {
         _digDamage = 1f;
-
-        if (Pathfinding.checkForPath(unit.transform.position, _rubble.transform.position))
-            unit.changeState(new Walking(unit.transform.position, _rubble.transform.position, unit));
+        if (!isAtRubble())
+            if (Pathfinding.checkForPath(unit.transform.position, _rubble.transform.position))
+                unit.insertTask(TaskSystem.createWalkTask(_rubble.transform.position));
+            else
+                _taskEnded = true;
         else
-            _taskEnded = true;
+            unit.changeState(new Digging(_rubble, _digDamage));
+
     }
 
     public override void execute()
     {
-        if (unit.isAtPosition(_rubble.transform.position) && unit.getState().GetType() != typeof(Digging))
+        if (isAtRubble() && unit.getState().GetType() != typeof(Digging))
         {
             unit.changeState(new Digging(_rubble, _digDamage));
         }
@@ -40,6 +43,19 @@ public class DigTask : Task
 
         return false;
     }
+
+    private bool isAtRubble()
+    {
+        if(_rubble == null)
+        {
+            _taskEnded = true;
+            return true;
+        }
+
+        return unit.isAtPosition(_rubble.transform.position);
+    }
+
+
 
 
 }

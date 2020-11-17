@@ -16,7 +16,7 @@ public class UnitControl : MonoBehaviour
 
     public void selectSingleUnit(Unit unit)
     {
-        unit.setSelected(true);
+        unit.toggleSelected(true);
         _selectedUnits.Add(unit);
     }
 
@@ -29,7 +29,7 @@ public class UnitControl : MonoBehaviour
     public void deselectUnits()
     {
         foreach (Unit unit in _selectedUnits)
-            unit.setSelected(false);
+            unit.toggleSelected(false);
 
         _selectedUnits.Clear();
     }
@@ -42,9 +42,11 @@ public class UnitControl : MonoBehaviour
                 Vector3 targetPos = target.transform.position;
                 foreach (Unit unit in _selectedUnits)
                 {
-                    unit.changeTask(TaskSystem.createWalkTask(targetPos));
+                    Task t = TaskSystem.createWalkTask(targetPos);
 
-                    if (!unit.task.multipleMode)
+                    unit.enqueueTask(t);
+
+                    if (!t.multipleMode)
                         return;
                 }
 
@@ -55,9 +57,11 @@ public class UnitControl : MonoBehaviour
 
                 foreach (Unit unit in _selectedUnits)
                 {
-                    unit.changeTask(TaskSystem.createDrillTask(targetWall));
+                    Task t = TaskSystem.createDrillTask(targetWall);
 
-                    if (!unit.task.multipleMode)
+                    unit.enqueueTask(t);
+
+                    if (!t.multipleMode)
                         return;
                 }
 
@@ -67,9 +71,11 @@ public class UnitControl : MonoBehaviour
                 Resource resource = target.GetComponent<Resource>();
                 foreach (Unit unit in _selectedUnits)
                 {
-                    unit.changeTask(TaskSystem.createPickupTask(resource));
+                    Task t = TaskSystem.createPickupTask(resource);
 
-                    if (!unit.task.multipleMode)
+                    unit.enqueueTask(t);
+
+                    if (!t.multipleMode)
                         return;
                 }
                 break;
@@ -77,9 +83,11 @@ public class UnitControl : MonoBehaviour
             case "DropTask":
                 foreach (Unit unit in _selectedUnits)
                 {
-                    unit.changeTask(TaskSystem.createDropTask());
+                    Task t = TaskSystem.createDropTask();
 
-                    if (!unit.task.multipleMode)
+                    unit.enqueueTask(t);
+
+                    if (!t.multipleMode)
                         return;
                 }
                 break;
@@ -88,9 +96,11 @@ public class UnitControl : MonoBehaviour
                 Rubble rubble = target.GetComponent<Rubble>();
                 foreach (Unit unit in _selectedUnits)
                 {
-                    unit.changeTask(TaskSystem.createDigTask(rubble));
+                    Task t = TaskSystem.createDigTask(rubble);
 
-                    if (!unit.task.multipleMode)
+                    unit.enqueueTask(t);
+
+                    if (!t.multipleMode)
                         return;
                 }
                 break;

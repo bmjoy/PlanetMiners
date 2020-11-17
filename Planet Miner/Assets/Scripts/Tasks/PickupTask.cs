@@ -26,16 +26,15 @@ public class PickupTask : Task
     public override void start()
     {
         if (!isAtResource())
-            unit.changeState(new Walking(unit.transform.position, _resource.transform.position, this.unit));
+            unit.insertTask(TaskSystem.createWalkTask(_resource.transform.position));
         else
             unit.changeState(new Pickup(_resource, unit));
     }
 
     private bool isAtResource()
     {
-        if (_resource == null)
-            return false;
-
         return (unit.isAtPosition(_resource.transform.position));
     }
+
+
 }

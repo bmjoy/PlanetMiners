@@ -29,7 +29,7 @@ public class DrillTask : Task
         else
         {
             if (Pathfinding.checkForPath(unit.transform.position, _groundNextToWall.transform.position))
-                unit.changeState(new Walking(unit.transform.position, _groundNextToWall.transform.position, unit));
+                unit.insertTask(TaskSystem.createWalkTask(_groundNextToWall.transform.position));
             else
             {
                 _taskEnded = true;
@@ -80,6 +80,7 @@ public class DrillTask : Task
     {
         return unit.isAtPosition(_groundNextToWall.transform.position);
     }
+
 }
 
 

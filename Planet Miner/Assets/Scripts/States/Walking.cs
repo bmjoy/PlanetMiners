@@ -13,33 +13,29 @@ public class Walking : State
     {
         _unit = unit;
         _goal = goal;
-        _path = Pathfinding.findPath(start, goal);
-        if (_path != null)
+        if (Pathfinding.checkForPath(start, goal))
+        {
+            _path = Pathfinding.findPath(start, goal);
             _currentGoal = _path[_pathIndex];
+        }
         else
             _unit.changeState(new Idle());
     }
     public override void run()
     {
-        if (_path == null)
+        if (_pathIndex >= _path.Count)
         {
             _unit.changeState(new Idle());
             return;
         }
 
-        if (_pathIndex < _path.Count)
-        {
-            _currentGoal = _path[_pathIndex];
+        _currentGoal = _path[_pathIndex];
 
-            _unit.transform.position = Vector3.MoveTowards(_unit.transform.position, _currentGoal, _unit.moveSpeed);
-            _unit.transform.LookAt(_currentGoal);
+        _unit.transform.position = Vector3.MoveTowards(_unit.transform.position, _currentGoal, _unit.moveSpeed);
+        _unit.transform.LookAt(_currentGoal);
 
-            if (_unit.transform.position.Equals(_currentGoal))
-                _pathIndex++;
-        }
-        else
-        {
-            _unit.changeState(new Idle());
-        }
+        if (_unit.transform.position.Equals(_currentGoal))
+            _pathIndex++;
+
     }
 }

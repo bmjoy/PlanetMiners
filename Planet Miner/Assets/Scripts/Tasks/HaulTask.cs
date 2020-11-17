@@ -30,17 +30,16 @@ public class HaulTask : Task
 
         if (unit.inventory.itemInHand() == _objectToHaul && isAtStartPosition && !hasItem)
         {
-            unit.changeState(new Walking(_startPosition, _endPosition, unit));
+            unit.insertTask(TaskSystem.createWalkTask(_endPosition));
             hasItem = true;
             isHauling = true;
         }
 
         if(unit.isAtPosition(_endPosition) && hasItem)
         {
-            Debug.Log($"Dropping {_objectToHaul.name} on ground");
             unit.changeState(new Drop(unit));
             hasItem = false;
-            Debug.Log($"Dropped {_objectToHaul.name} on ground");
+
         }
     }
 
@@ -51,6 +50,7 @@ public class HaulTask : Task
 
     public override void start()
     {
-        unit.changeState(new Walking(unit.transform.position, _startPosition, unit));
+        unit.insertTask(TaskSystem.createWalkTask(_startPosition));
+
     }
 }

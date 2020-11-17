@@ -10,7 +10,9 @@ public class Unit : MonoBehaviour
 
     private State _state;
 
-    private Task _task = null;
+    private Task _currentTask = null;
+    private Queue<Task> _taskQueue = new Queue<Task>();
+    private bool doingTask = false;
 
     public Inventory _inventory;
 
@@ -38,27 +40,19 @@ public class Unit : MonoBehaviour
 
     private void Update()
     {
-        runTask();
+        taskLoop();
 
         runState();
 
-        if (_task != null)
-            taskname = _task.ToString();
+        if (_currentTask != null)
+            taskname = _currentTask.ToString();
         if (_state != null)
             statename = _state.ToString();
     }
 
-    private void runTask()
-    {
-        if (_task == null)
-            return;
 
-        if (checkTaskFinished())
-            return;
 
-        _task.execute();
-
-    }
+    #region state
 
     private void runState()
     {
@@ -66,52 +60,10 @@ public class Unit : MonoBehaviour
             _state.run();
     }
 
-    private bool checkTaskFinished()
-    {
-        if (_task.isFinished())
-        {
-            endTask();
-            return true;
-        }
-        return false;
-    }
-
     public State getState()
     {
         return _state;
     }
-
-    public void changeTask(Task task)
-    {
-        if (task == null)
-            return;
-
-        if (_task != null)
-            endTask();
-
-        _task = task;
-        _task.unit = this;
-
-        checkTaskFinished();
-
-
-
-        _task.start();
-    }
-
-    public void endTask()
-    {
-        _task.end();
-        _task = null;
-        changeState(new Idle());
-        taskname = "";
-    }
-
-    public bool hasTask
-    {
-        get => (_task != null);
-    }
-    public Task task { get => _task; }
 
     public void changeState(State state)
     {
@@ -119,18 +71,116 @@ public class Unit : MonoBehaviour
 
     }
 
+    #endregion
+
+    #region tasks
+    public void enqueueTask(Task task)
+    {
+        task.unit = this;
+        _taskQueue.Enqueue(task);
+    }
+
+    public Task deQueueTask()
+    {
+        if (_taskQueue.Count == 0)
+            return null;
+
+        return _taskQueue.Dequeue();
+    }
+
+    public void insertTask(Task task)
+    {
+        enqueueTask(task);
+        enqueueTask(currentTask);
+        doingTask = false;
+        nextTask();
+        startTask();
+    }
+    private void startTask()
+    {
+        _currentTask.start();
+        doingTask = true;
+    }
+
+    private void executeTask()
+    {
+        _currentTask.execute();
+    }
+
+    private bool checkTaskFinished()
+    {
+        return _currentTask.isFinished();
+    }
+
+    private void endTask()
+    {
+        doingTask = false;
+        _currentTask.end();
+        _currentTask = null;
+        changeState(new Idle());
+        taskname = "";
+
+    }
+
+    private void nextTask()
+    {
+        _currentTask = deQueueTask();
+    }
+
+    public Task currentTask
+    {
+        get => _currentTask;
+    }
+
+    public bool hasTask
+    {
+        get => (_currentTask != null);
+    }
+
+    private void taskLoop()
+    {
+        if (!hasTask)
+            nextTask();
+
+        if (hasTask && !doingTask)
+            startTask();
+
+        if (hasTask && doingTask)
+        {
+            if (checkTaskFinished())
+                endTask();
+            else
+                executeTask();
+        }
+    }
+
+
+    #endregion
+
+    #region position
+
+    public Vector3 position
+    {
+        get => transform.position;
+    }
+
     public bool isAtPosition(Vector3 pos)
     {
         return (transform.position.x == pos.x && transform.position.z == pos.z);
     }
 
-    public void setSelected(bool v)
+    #endregion
+
+
+    #region selection
+    public void toggleSelected(bool v)
     {
         if (v)
             selectUnit();
         else
             deselectUnit();
     }
+
     private void selectUnit()
     {
         transform.rotation = Quaternion.Euler(90, 0, 0);
@@ -140,6 +190,5 @@ public class Unit : MonoBehaviour
     {
         transform.rotation = Quaternion.Euler(0, 0, 0);
     }
-
-
+    #endregion
 }
