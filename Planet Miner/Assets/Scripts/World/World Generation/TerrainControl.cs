@@ -165,20 +165,20 @@ public class TerrainControl : MonoBehaviour
         }
 
         //insert start area beginning in center
-        for (int x = centerx; x < centerx + startAreaSize + 1; x++)
+        for (int x = centerx - 1; x < centerx + startAreaSize + 1; x++)
         {
-            for (int z = centerz; z < centerz + startAreaSize + 1; z++)
+            for (int z = centerz - 1; z < centerz + startAreaSize + 1; z++)
             {
-                if (x == centerx)
+                if (x == centerx -1)
                     _noiseMap[x, z] = 1;
                 else
-                if (z == centerz)
+                if (z == centerz -1)
                     _noiseMap[x, z] = 1;
                 else
-                if (x == x + startAreaSize)
+                if (x == x + startAreaSize + 1)
                     _noiseMap[x, z] = 1;
                 else
-                if (z == z + startAreaSize)
+                if (z == z + startAreaSize + 1)
                     _noiseMap[x, z] = 1;
                 else
                     _noiseMap[x, z] = 0;
