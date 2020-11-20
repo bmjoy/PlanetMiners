@@ -8,7 +8,9 @@ using UnityEngine.UI;
 public class MouseControl : MonoBehaviour
 {
     public Camera worldCamera;
+    public TerrainControl terrainControl;
     public UnitControl unitControl;
+    public UIControl uiControl;
 
     private bool _mouseIsPressed = false;
     [SerializeField]
@@ -80,6 +82,7 @@ public class MouseControl : MonoBehaviour
                 {
                     unitControl.selectSingleUnit(hit.transform.GetComponent<Unit>());
                     _mouseMode = MouseMode.unitSelected;
+                    uiControl.changeSideMenu("UnitMenu");
                 }
                 break;
 
@@ -112,7 +115,7 @@ public class MouseControl : MonoBehaviour
 
                 break;
             case MouseMode.waitingForTarget:
-                unitControl.assignTaskToSelected(lastButtonPressed.taskName, hit);
+                unitControl.assignTaskToSelected(lastButtonPressed.actionName, hit);
                 _mouseMode = MouseMode.unitSelected;
                 break;
         }
@@ -124,15 +127,42 @@ public class MouseControl : MonoBehaviour
     {
         lastButtonPressed = actionButton;
 
-        if (actionButton.actionType.Equals(ActionButton.ActionType.needTarget))
-        {
-            _mouseMode = MouseMode.waitingForTarget;
 
-            targetLayer = actionButton.targetLayer;
-        }
-        else if (actionButton.actionType.Equals(ActionButton.ActionType.instant))
+
+        switch (actionButton.targetSystem)
         {
-            unitControl.assignTaskToSelected(lastButtonPressed.taskName, null);
+            case ActionButton.TargetSystem.UnitControl:
+                if (actionButton.actionType.Equals(ActionButton.ActionType.needTarget))
+                {
+                    _mouseMode = MouseMode.waitingForTarget;
+
+                    targetLayer = actionButton.targetLayer;
+                }
+                else if (actionButton.actionType.Equals(ActionButton.ActionType.instant))
+                {
+                    if (actionButton.actionName == "SpawnUnit")
+                    {
+
+                        UnitSpawner unitSpawner = terrainControl.getBuilding("UnitSpawn") as UnitSpawner;
+                        unitSpawner.spawnUnit();
+                    }
+
+                    unitControl.assignTaskToSelected(lastButtonPressed.actionName, null);
+                }
+                break;
+
+            case ActionButton.TargetSystem.UIControl:
+                if (actionButton.actionName == "ToBuildMenu")
+                    uiControl.changeSideMenu("BuildMenu");
+                break;
+
+            case ActionButton.TargetSystem.ConstructionControl:
+
+                break;
+
+            case ActionButton.TargetSystem.BuildingControl:
+
+                break;
         }
     }
 
@@ -149,6 +179,7 @@ public class MouseControl : MonoBehaviour
     private void righClick()
     {
         unitControl.deselectUnits();
+        uiControl.changeSideMenu("ControlMenu");
         _mouseMode = MouseMode.none;
         targetLayer = 1 << 16;
 
