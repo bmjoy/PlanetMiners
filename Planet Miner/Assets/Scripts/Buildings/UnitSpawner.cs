@@ -9,6 +9,8 @@ public class UnitSpawner : Building
     private void Start()
     {
         unitSpawn = transform.position + transform.forward;
+        unitSpawn.y = 1;
+        terrainControl = FindObjectOfType<TerrainControl>();
     }
     public void spawnUnit()
     {

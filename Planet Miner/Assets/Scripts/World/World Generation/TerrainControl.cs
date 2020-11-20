@@ -207,7 +207,7 @@ public class TerrainControl : MonoBehaviour
                     _worldMap[x, z].name = "Ground" + x + "," + z;
 
                     _buildingMap[x, z] = Instantiate(buildings[0], new Vector3(x, 0, z), Quaternion.identity, this.transform);
-
+                    _buildingMap[x, z].name = buildings[0].name;
                 }
                 else if (_noiseMap[x, z] == 4)
                 {
@@ -216,6 +216,7 @@ public class TerrainControl : MonoBehaviour
                     _worldMap[x, z].name = "Ground" + x + "," + z;
 
                     _buildingMap[x, z] = Instantiate(buildings[1], new Vector3(x, 0, z), Quaternion.identity, this.transform);
+                    _buildingMap[x, z].name = buildings[1].name;
                 }
 
             }
@@ -814,7 +815,19 @@ public class TerrainControl : MonoBehaviour
     #endregion
 
     #region BuildingManipulation
+    public Building getBuilding(string buildingName)
+    {
+        
+        foreach (GameObject building in _buildingMap)
+        {
+            if (building == null) continue;
 
+            if (building.name == buildingName)
+                return building.GetComponent<Building>();
+        }
+
+        return null;
+    }
 
     #endregion
 
