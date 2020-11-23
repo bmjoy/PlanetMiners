@@ -142,9 +142,10 @@ public class MouseControl : MonoBehaviour
                 {
                     if (actionButton.actionName == "SpawnUnit")
                     {
-
-                        UnitSpawner unitSpawner = terrainControl.getBuilding("UnitSpawn") as UnitSpawner;
-                        unitSpawner.spawnUnit();
+                        EventManager.current.spawnUnit();
+                    }else if(actionButton.actionName == "DespawnUnit")
+                    {
+                        EventManager.current.deSpawnUnit();
                     }
 
                     unitControl.assignTaskToSelected(lastButtonPressed.actionName, null);
@@ -271,5 +272,10 @@ public class MouseControl : MonoBehaviour
         Cursor.SetCursor(cursorTexture, new Vector2(0, 0), CursorMode.Auto);
     }
 
+
+    private void onUnitSelected()
+    {
+
+    } 
 
 }

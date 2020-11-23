@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -26,19 +27,13 @@ public class WorldControl : MonoBehaviour
 
         foreach (Node n in terrainControl.getAllNodeObjects())
             Pathfinding.addNode(n);
-
-        unitControl.addUnits(terrainControl.getUnits());
-
-        StartCoroutine(taskSystemLoop());
     }
 
     IEnumerator taskSystemLoop()
     {
         yield return new WaitForSeconds(taskSystemLoopTime);
-        
+
         taskSystem.asignTasks(terrainControl.getUnits());
         StartCoroutine(taskSystemLoop());
     }
-
-   
 }
