@@ -19,6 +19,7 @@ public class TerrainControl : MonoBehaviour
     private GameObject[,] _worldMap;
     private GameObject[,] _buildingMap;
     private float[,] _noiseMap;
+    private UnitSpawner unitSpawner;
 
     [Header("Prefabs")]
     public GameObject[] walls;
@@ -45,6 +46,11 @@ public class TerrainControl : MonoBehaviour
     private List<Node> nodeObjects = new List<Node>();
 
     private List<Resource> resourceObjects = new List<Resource>();
+
+    private void Start()
+    {
+        EventManager.current.onSpawnUnit += spawnUnit;
+    }
 
     private GameObject[] findNeighbours(GameObject[,] map, int x, int z)
     {
@@ -211,12 +217,13 @@ public class TerrainControl : MonoBehaviour
                 }
                 else if (_noiseMap[x, z] == 4)
                 {
-                    //unit spawn
+                    //unit spawner
                     _worldMap[x, z] = Instantiate(grounds[0], new Vector3(x, 0, z), Quaternion.identity, this.transform);
                     _worldMap[x, z].name = "Ground" + x + "," + z;
 
                     _buildingMap[x, z] = Instantiate(buildings[1], new Vector3(x, 0, z), Quaternion.identity, this.transform);
                     _buildingMap[x, z].name = buildings[1].name;
+                    unitSpawner = _buildingMap[x, z].GetComponent<UnitSpawner>();
                 }
 
             }
@@ -837,12 +844,14 @@ public class TerrainControl : MonoBehaviour
         return units;
     }
 
-    public void spawnUnit(Vector3 unitSpawn)
+    public void spawnUnit()
     {
-        GameObject u = Instantiate(unitPrefab, unitSpawn, Quaternion.identity, this.transform);
+        GameObject u = Instantiate(unitPrefab, unitSpawner.unitSpawn, Quaternion.identity, this.transform);
         u.name = "unit " + units.Count;
         units.Add(u.GetComponent<Unit>());
     }
+
+
 
     #endregion
 }
