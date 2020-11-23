@@ -5,13 +5,39 @@ using UnityEngine;
 
 public class UnitControl : MonoBehaviour
 {
-    private List<Unit> _units;
+    private List<Unit> _units = new List<Unit>();
 
     private List<Unit> _selectedUnits = new List<Unit>();
 
-    public void addUnits(List<Unit> units)
+    public GameObject unitPrefab;
+    private UnitSpawner unitSpawner;
+
+    private void Start()
     {
-        _units = units;
+        EventManager.current.onSpawnUnit += spawnUnit;
+        EventManager.current.onDeSpawnUnit += deSpawnUnit;
+        unitSpawner = FindObjectOfType<UnitSpawner>();
+    }
+
+    public void spawnUnit()
+    {
+        GameObject u = Instantiate(unitPrefab, unitSpawner.unitSpawn, Quaternion.identity, this.transform);
+        u.name = "unit " + _units.Count;
+        _units.Add(u.GetComponent<Unit>());
+    }
+
+    public void deSpawnUnit()
+    {
+        List<Unit> unitsToDespawn = _selectedUnits;
+
+
+        foreach (Unit unit in unitsToDespawn)
+        {
+            _units.Remove(unit);
+            Destroy(unit.gameObject);
+        }
+
+        deselectUnits();
     }
 
     public void selectSingleUnit(Unit unit)
@@ -29,7 +55,7 @@ public class UnitControl : MonoBehaviour
     public void deselectUnits()
     {
         foreach (Unit unit in _selectedUnits)
-            unit.toggleSelected(false);
+            unit?.toggleSelected(false);
 
         _selectedUnits.Clear();
     }

@@ -47,11 +47,6 @@ public class TerrainControl : MonoBehaviour
 
     private List<Resource> resourceObjects = new List<Resource>();
 
-    private void Start()
-    {
-        EventManager.current.onSpawnUnit += spawnUnit;
-    }
-
     private GameObject[] findNeighbours(GameObject[,] map, int x, int z)
     {
         GameObject[] neighbours = new GameObject[8];
@@ -835,23 +830,6 @@ public class TerrainControl : MonoBehaviour
 
         return null;
     }
-
-    #endregion
-
-    #region UnitControl
-    public List<Unit> getUnits()
-    {
-        return units;
-    }
-
-    public void spawnUnit()
-    {
-        GameObject u = Instantiate(unitPrefab, unitSpawner.unitSpawn, Quaternion.identity, this.transform);
-        u.name = "unit " + units.Count;
-        units.Add(u.GetComponent<Unit>());
-    }
-
-
 
     #endregion
 }

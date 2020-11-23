@@ -143,9 +143,11 @@ public class MouseControl : MonoBehaviour
                     if (actionButton.actionName == "SpawnUnit")
                     {
                         EventManager.current.spawnUnit();
-                    }else if(actionButton.actionName == "DespawnUnit")
+                    }
+                    else if(actionButton.actionName == "DespawnUnit")
                     {
                         EventManager.current.deSpawnUnit();
+                        righClick();
                     }
 
                     unitControl.assignTaskToSelected(lastButtonPressed.actionName, null);

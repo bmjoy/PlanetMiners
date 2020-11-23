@@ -33,7 +33,7 @@ public class WorldControl : MonoBehaviour
     {
         yield return new WaitForSeconds(taskSystemLoopTime);
 
-        taskSystem.asignTasks(terrainControl.getUnits());
+        taskSystem.asignTasks(unitControl.units());
         StartCoroutine(taskSystemLoop());
     }
 }

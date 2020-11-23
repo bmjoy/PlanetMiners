@@ -19,12 +19,12 @@ public class EventManager : MonoBehaviour
             onSpawnUnit();
     }
 
-    public event Action onDespawnUnit;
+    public event Action onDeSpawnUnit;
 
     public void deSpawnUnit()
     {
-        if (onDespawnUnit != null)
-            onDespawnUnit();
+        if (onDeSpawnUnit != null)
+            onDeSpawnUnit();
     }
 
     public event Action onUnitSpawned;
