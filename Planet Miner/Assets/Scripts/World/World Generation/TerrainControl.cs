@@ -7,8 +7,10 @@ using UnityEngine;
 public class TerrainControl : MonoBehaviour
 {
     [Header("World size")]
-    public int worldWidth = 10;
-    public int worldHeight = 10;
+    [SerializeField]
+    private static int worldWidth = 10;
+    [SerializeField]
+    private static int worldHeight = 10;
     public float scale = 1;
     public float offsetX = 1;
 
@@ -17,19 +19,11 @@ public class TerrainControl : MonoBehaviour
     public int startAreaSize = 3;
 
     private GameObject[,] _worldMap;
-    private GameObject[,] _buildingMap;
     private float[,] _noiseMap;
-    private UnitSpawner unitSpawner;
 
     [Header("Prefabs")]
     public GameObject[] walls;
     public GameObject[] grounds;
-    [Space]
-    public GameObject[] buildings;
-    [Space]
-    public GameObject unitPrefab;
-
-    private List<Unit> units = new List<Unit>();
 
     [Header("Spawn Range Terrain")]
     [Range(0, 1f)]
@@ -98,7 +92,10 @@ public class TerrainControl : MonoBehaviour
         return neighbours;
     }
 
-
+    public static Vector2 wordlSize
+    {
+        get => new Vector2(worldWidth, worldHeight);
+    }
 
     public List<Node> getAllNodeObjects()
     {
@@ -145,7 +142,6 @@ public class TerrainControl : MonoBehaviour
         worldHeight = PlayerPrefs.GetInt("WorldHeight");
 
         _worldMap = new GameObject[worldWidth, worldHeight];
-        _buildingMap = new GameObject[worldWidth, worldHeight];
 
         _noiseMap = GeneratePerlinMap.generateMap(worldWidth, worldHeight, scale, offsetX, offsetZ);
 
@@ -201,26 +197,6 @@ public class TerrainControl : MonoBehaviour
                     _worldMap[x, z] = Instantiate(grounds[0], new Vector3(x, 0, z), Quaternion.identity, this.transform);
                     _worldMap[x, z].name = "Ground" + x + "," + z;
                 }
-                else if (_noiseMap[x, z] == 3)
-                {
-                    //unit hub
-                    _worldMap[x, z] = Instantiate(grounds[0], new Vector3(x, 0, z), Quaternion.identity, this.transform);
-                    _worldMap[x, z].name = "Ground" + x + "," + z;
-
-                    _buildingMap[x, z] = Instantiate(buildings[0], new Vector3(x, 0, z), Quaternion.identity, this.transform);
-                    _buildingMap[x, z].name = buildings[0].name;
-                }
-                else if (_noiseMap[x, z] == 4)
-                {
-                    //unit spawner
-                    _worldMap[x, z] = Instantiate(grounds[0], new Vector3(x, 0, z), Quaternion.identity, this.transform);
-                    _worldMap[x, z].name = "Ground" + x + "," + z;
-
-                    _buildingMap[x, z] = Instantiate(buildings[1], new Vector3(x, 0, z), Quaternion.identity, this.transform);
-                    _buildingMap[x, z].name = buildings[1].name;
-                    unitSpawner = _buildingMap[x, z].GetComponent<UnitSpawner>();
-                }
-
             }
         }
         //remove single ground caves
@@ -247,8 +223,6 @@ public class TerrainControl : MonoBehaviour
         centerz = Mathf.FloorToInt(worldHeight / 2);
         /* 0 = ground
          * 1 = wall
-         * 3 = UnitHub
-         * 4 = UnitSpawn
          */
         float[,] startArea =
         {
@@ -256,8 +230,8 @@ public class TerrainControl : MonoBehaviour
             {1,1,1,1,1,1,1},
             {1,1,1,1,1,1,1},
             {1,1,0,0,0,1,1},
-   /*down*/ {1,1,4,0,0,1,1}, //up
-            {1,1,3,0,0,1,1},
+   /*down*/ {1,1,0,0,0,1,1}, //up
+            {1,1,0,0,0,1,1},
             {1,1,1,1,1,1,1},
             {1,1,1,1,1,1,1},
             //right
@@ -816,20 +790,4 @@ public class TerrainControl : MonoBehaviour
     }
     #endregion
 
-    #region BuildingManipulation
-    public Building getBuilding(string buildingName)
-    {
-        
-        foreach (GameObject building in _buildingMap)
-        {
-            if (building == null) continue;
-
-            if (building.name == buildingName)
-                return building.GetComponent<Building>();
-        }
-
-        return null;
-    }
-
-    #endregion
 }

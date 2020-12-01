@@ -21,6 +21,9 @@ public class UnitControl : MonoBehaviour
 
     public void spawnUnit()
     {
+        if(unitSpawner == null)
+            unitSpawner = FindObjectOfType<UnitSpawner>();
+
         GameObject u = Instantiate(unitPrefab, unitSpawner.unitSpawn, Quaternion.identity, this.transform);
         u.name = "unit " + _units.Count;
         _units.Add(u.GetComponent<Unit>());

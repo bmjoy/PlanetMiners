@@ -34,21 +34,25 @@ public class MouseControl : MonoBehaviour
     [SerializeField]
     private Vector2 _selectionEndPosition;
 
-
+    private string _targetTag;
 
     private void Start()
     {
         targetLayer = 1 << 16;
+        EventManager.current.onBuildingPlaced += setMouseModeToNone;
     }
     public enum MouseMode
     {
         none,
         unitSelected,
-        waitingForTarget
+        waitingForTarget,
+        placingBuilding,
     }
 
-    private string _targetTag;
-
+    private void setMouseModeToNone()
+    {
+        _mouseMode = MouseMode.none;
+    }
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))
@@ -64,6 +68,19 @@ public class MouseControl : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0))
             mouseUp();
+
+        updateCursorObject();
+    }
+
+    private void updateCursorObject()
+    {
+        GameObject posobj = getRayTarget(Input.mousePosition);
+        if (posobj == null)
+            return;
+
+        Vector3 pos = posobj.transform.position;
+        pos.y = 0;
+        CursorObject.cursorObject.transform.position = pos;
     }
 
     public void leftClick()
@@ -118,6 +135,9 @@ public class MouseControl : MonoBehaviour
                 unitControl.assignTaskToSelected(lastButtonPressed.actionName, hit);
                 _mouseMode = MouseMode.unitSelected;
                 break;
+            case MouseMode.placingBuilding:
+                EventManager.current.placingBuilding();
+                break;
         }
 
 
@@ -160,7 +180,16 @@ public class MouseControl : MonoBehaviour
                 break;
 
             case ActionButton.TargetSystem.ConstructionControl:
+                if (actionButton.actionName == "BuildUnitHub")
+                    EventManager.current.showGhostBuilding("UnitHub");
 
+                if (actionButton.actionName == "BuildUnitSpawn")
+                    EventManager.current.showGhostBuilding("UnitSpawn");
+
+                if (actionButton.actionName == "BuildGenerator")
+                    EventManager.current.showGhostBuilding("Generator");
+
+                _mouseMode = MouseMode.placingBuilding;
                 break;
 
             case ActionButton.TargetSystem.BuildingControl:
@@ -181,10 +210,22 @@ public class MouseControl : MonoBehaviour
 
     private void righClick()
     {
-        unitControl.deselectUnits();
-        uiControl.changeSideMenu("ControlMenu");
-        _mouseMode = MouseMode.none;
-        targetLayer = 1 << 16;
+        if(_mouseMode == MouseMode.placingBuilding)
+        {
+            EventManager.current.cancelPlaceBuilding();
+            _mouseMode = MouseMode.none;
+        }
+
+        if (_mouseMode == MouseMode.unitSelected)
+        {
+            unitControl.deselectUnits();
+            uiControl.changeSideMenu("ControlMenu");
+            _mouseMode = MouseMode.none;
+            targetLayer = 1 << 16;
+        }
+
+        if (_mouseMode == MouseMode.none)
+            uiControl.changeSideMenu("ControlMenu");
 
     }
 

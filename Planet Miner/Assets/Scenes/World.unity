@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -524,6 +524,7 @@ Transform:
   - {fileID: 1848933814}
   - {fileID: 1318498794}
   - {fileID: 1958907622}
+  - {fileID: 2116343111}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -762,6 +763,49 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2343c249e84104c4a98abe5f5c88d641, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &786375696
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 786375698}
+  - component: {fileID: 786375697}
+  m_Layer: 0
+  m_Name: CursorObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &786375697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 786375696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56a5c76df4313ff41a0d1917fc465cb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &786375698
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 786375696}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1787.198, y: 675.4921, z: -6.4485135}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &827852899
 GameObject:
   m_ObjectHideFlags: 0
@@ -1149,8 +1193,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 901e6ee9d77de2f4fb419b21b3604aa6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  worldWidth: 10
-  worldHeight: 10
   scale: 8
   offsetX: 1
   offsetZ: 1
@@ -1162,11 +1204,6 @@ MonoBehaviour:
   - {fileID: 474285479570617044, guid: 3a38a893f2442cd4d9458a7230617089, type: 3}
   grounds:
   - {fileID: 7594225892198606713, guid: 13717b932ce65df4eb3fd698a944c802, type: 3}
-  buildings:
-  - {fileID: 8372656251046232889, guid: 1bfd13fea100d1648bfc2ed3322884e5, type: 3}
-  - {fileID: 1254659003230144734, guid: 7cb77f4eb90fd1047b5f041954b49eca, type: 3}
-  unitPrefab: {fileID: 6127668985060176437, guid: 43be1a370c6b4e1419390caee2edabb1,
-    type: 3}
   groundRange: 0.3
   chanceCrystal: 0.2
 --- !u!1 &1466822376
@@ -2941,6 +2978,53 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecb7bdf6192df7f4b90cf0a7c8fe1f58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &2116343110
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2116343111}
+  - component: {fileID: 2116343112}
+  m_Layer: 0
+  m_Name: BuildingControl
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2116343111
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2116343110}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 347117284}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2116343112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2116343110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee80eb169de301643884ec8fcebc1e25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buildingPrefabs:
+  - {fileID: 8372656251046232889, guid: 1bfd13fea100d1648bfc2ed3322884e5, type: 3}
+  - {fileID: 1254659003230144734, guid: 7cb77f4eb90fd1047b5f041954b49eca, type: 3}
+  - {fileID: 5030457151668948195, guid: 1bf8983f3cad7d547b42f13b74e0e483, type: 3}
 --- !u!1001 &2130779733
 PrefabInstance:
   m_ObjectHideFlags: 0

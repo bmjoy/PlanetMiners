@@ -21,7 +21,7 @@ public class Pathfinding
         nodeMap.Add(node);
     }
 
-    private static Node getNodeByPosition(Vector3 nodePos)
+    public static Node getNodeByPosition(Vector3 nodePos)
     {
         nodePos.y = 0;
 
@@ -76,7 +76,7 @@ public class Pathfinding
 
             foreach (Node connectedNode in current.connections)
             {
-                if (closedSet.Contains(connectedNode))
+                if (closedSet.Contains(connectedNode) || !connectedNode.canWalkHere)
                     continue;
 
                 connectedNode.g = int.MaxValue;

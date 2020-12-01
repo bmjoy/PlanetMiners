@@ -59,6 +59,25 @@ public class EventManager : MonoBehaviour
             onUnitDeselected();
     }
 
+    #region buildingEvents
+
+    public event Action<string> onShowGhostBuilding;
+
+    public void showGhostBuilding(string buildingName)
+    {
+        if (onShowGhostBuilding != null)
+            onShowGhostBuilding(buildingName);
+    }
+
+
+    public event Action onPlacingBuilding;
+
+    public void placingBuilding()
+    {
+        if (onPlacingBuilding != null)
+            onPlacingBuilding();
+    }
+
     public event Action onBuildingPlaced;
 
     public void buildingPlaced()
@@ -67,11 +86,21 @@ public class EventManager : MonoBehaviour
             onBuildingPlaced();
     }
 
-    public event Action onBuildingRemoved;
+    public event Action<Vector3> onRemoveBuilding;
 
-    public void buildingRemoved()
+    public void removeBuilding(Vector3 position)
     {
-        if (onBuildingRemoved != null)
-            onBuildingRemoved();
+        if (onRemoveBuilding != null)
+            onRemoveBuilding(position);
     }
+
+    public event Action onCancelPlaceBuilding;
+
+    public void cancelPlaceBuilding()
+    {
+        if (onCancelPlaceBuilding != null)
+            onCancelPlaceBuilding();
+    }
+
+    #endregion
 }

@@ -16,6 +16,8 @@ public class Node : MonoBehaviour
     private int _h = 0;
     [SerializeField]
     private int _f = 0;
+    [SerializeField]
+    private bool _canWalkHere = true;
 
 
     public void initialize()
@@ -48,6 +50,12 @@ public class Node : MonoBehaviour
     public List<Node> connections
     {
         get => _connections;
+    }
+
+    public bool canWalkHere
+    {
+        get => _canWalkHere;
+        set => _canWalkHere = value;
     }
 
     //calculate the distance to another node
@@ -100,65 +108,4 @@ public class Node : MonoBehaviour
     {
         get => transform.position;
     }
-
-    /*private void OnDrawGizmos()
-    {
-        if (PlayerPrefs.GetInt("Debugging") == 0) return;
-
-        Gizmos.color = Color.red;
-        Gizmos.DrawCube(position, new Vector3(.5f, 1f, .5f));
-
-        Gizmos.color = Color.green;
-
-        Vector3 drawpos = position;
-        Vector3 drawto;
-        Vector3 arrowOffset = new Vector3(0, 0, 0);
-
-        foreach (Node node in connections)
-        {
-            drawto = node.position;
-            drawpos = position;
-            //under
-            if (drawto.z > position.z)
-            {
-
-                drawpos.x -= .25f;
-                drawto.x -= .25f;
-
-                arrowOffset = new Vector3(.25f, 0, -.5f);
-            }
-            else
-            //over
-            if (drawto.z < position.z)
-            {
-                drawpos.x += .25f;
-                drawto.x += .25f;
-
-                arrowOffset = new Vector3(.25f, 0, .5f);
-            }
-            else
-            //right
-            if (drawto.x > position.x)
-            {
-                drawpos.z += .25f;
-                drawto.z += .25f;
-                arrowOffset = new Vector3(-.5f, 0, .25f);
-            }
-            else
-            //left
-            if (drawto.x > position.x)
-            {
-                drawpos.z -= .25f;
-                drawto.z -= .25f;
-
-                arrowOffset = new Vector3(.5f, 0, .25f);
-
-            }
-
-            Gizmos.DrawLine(drawpos, drawto);
-            Gizmos.DrawLine(drawto, drawpos - arrowOffset);
-
-
-        }
-    }*/
 }
