@@ -7,6 +7,9 @@ public class Building : WorldBlock
     protected string buildingName;
     private float _maxHealth = 0;
 
+    protected int _powerNeed;
+    private bool _hasPower = false;
+    public int powerNeed { get => _powerNeed; }
 
     public float maxhealth
     {
@@ -19,5 +22,10 @@ public class Building : WorldBlock
     {
         if (health < maxhealth)
             health += repairAmount;
+    }
+
+    public void setPower(bool hasPower)
+    {
+        _hasPower = hasPower;
     }
 }

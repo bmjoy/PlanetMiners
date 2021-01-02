@@ -11,9 +11,13 @@ public class UIControl : MonoBehaviour
 
     public Text powerGridText;
 
-    private void Start()
+    private void Awake()
     {
         uIControl = this;
+    }
+
+    private void Start()
+    {
         changeSideMenu("ControlMenu");
     }
 
@@ -32,5 +36,7 @@ public class UIControl : MonoBehaviour
             }
         }
     }
+
+    public void updatePowerGridText(string text) => powerGridText.text = text;
 
 }

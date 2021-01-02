@@ -12,13 +12,13 @@ public class BuildingControl : MonoBehaviour
 
     [SerializeField]
     private Material[] ghostmaterials;
-    
+
 
 
     private void Start()
     {
         Vector2 worldSize = TerrainControl.wordlSize;
-        _buildingMap = new GameObject[(int)worldSize.x,(int) worldSize.y];
+        _buildingMap = new GameObject[(int)worldSize.x, (int)worldSize.y];
 
         EventManager.current.onShowGhostBuilding += showGhostBuilding;
         EventManager.current.onPlacingBuilding += placeBuilding;
@@ -45,8 +45,11 @@ public class BuildingControl : MonoBehaviour
 
         positionNode.canWalkHere = false;
 
-        GameObject building = Instantiate(ghostImage,contstructionPosition,ghostImage.transform.rotation, transform);
+        GameObject building = Instantiate(ghostImage, contstructionPosition, ghostImage.transform.rotation, transform);
         building.name = ghostImage.name;
+
+        if (building.name != "Generator")
+            PowerSystem.powerSystem.addToNetwork(building.GetComponent<Building>());
 
         _buildingMap[(int)contstructionPosition.x, (int)contstructionPosition.z] = building;
 
@@ -60,6 +63,8 @@ public class BuildingControl : MonoBehaviour
 
         ghostImage = Instantiate(targetObject, cursorObject.transform.position, Quaternion.identity, cursorObject.transform);
         ghostImage.name = targetObject.name;
+        if (ghostImage.TryGetComponent<Building>(out Building b))
+            b.enabled = false;
     }
 
     public void hideGhostBuilding()
@@ -79,14 +84,14 @@ public class BuildingControl : MonoBehaviour
         positionNode.canWalkHere = true;
     }
 
-    public GameObject getBuilding(int x,int z)
+    public GameObject getBuilding(int x, int z)
     {
         return _buildingMap[x, z];
     }
 
     private void rotateGhost(float rotation)
     {
-        ghostImage?.transform.Rotate(new Vector3(0,rotation,0));
+        ghostImage?.transform.Rotate(new Vector3(0, rotation, 0));
     }
 
     private bool canPlaceBuilding()
@@ -102,7 +107,7 @@ public class BuildingControl : MonoBehaviour
 
     }
 
-   
+
 
     private void Update()
     {

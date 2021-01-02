@@ -10,6 +10,5 @@ public class UnitSpawner : Building
     {
         unitSpawn = transform.position + transform.forward;
         unitSpawn.y = 1;
-        terrainControl = FindObjectOfType<TerrainControl>();
     }
 }
