@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BuildingControl : MonoBehaviour
 {
+    public static BuildingControl current;
+
     public GameObject[] buildingPrefabs;
 
     private GameObject[,] _buildingMap;
@@ -13,11 +15,15 @@ public class BuildingControl : MonoBehaviour
     [SerializeField]
     private Material[] ghostmaterials;
 
+    private void Awake()
+    {
+        current = this;
+    }
 
 
     private void Start()
     {
-        Vector2 worldSize = TerrainControl.wordlSize;
+        Vector2 worldSize = TerrainControl.worldSize;
         _buildingMap = new GameObject[(int)worldSize.x, (int)worldSize.y];
 
         EventManager.current.onShowGhostBuilding += showGhostBuilding;
@@ -52,7 +58,7 @@ public class BuildingControl : MonoBehaviour
             PowerSystem.powerSystem.addToNetwork(building.GetComponent<Building>());
 
         _buildingMap[(int)contstructionPosition.x, (int)contstructionPosition.z] = building;
-
+        building.GetComponent<Building>().enabled = true;
         EventManager.current.buildingPlaced();
     }
 
@@ -87,6 +93,16 @@ public class BuildingControl : MonoBehaviour
     public GameObject getBuilding(int x, int z)
     {
         return _buildingMap[x, z];
+    }
+
+    public GameObject getBuilding(string name)
+    {
+        foreach (GameObject building in _buildingMap)
+            if (building != null)
+                if (building.name.Equals(name))
+                    return building;
+
+        return null;
     }
 
     private void rotateGhost(float rotation)

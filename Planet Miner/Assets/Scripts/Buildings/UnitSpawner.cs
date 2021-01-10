@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class UnitSpawner : Building
 {
+    [SerializeField]
+    private Transform spawnTransform;
     public Vector3 unitSpawn;
 
     private void Start()
     {
-        unitSpawn = transform.position + transform.forward;
-        unitSpawn.y = 1;
+        unitSpawn = spawnTransform.position;   
     }
 }

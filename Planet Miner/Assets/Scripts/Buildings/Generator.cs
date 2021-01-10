@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Generator : MonoBehaviour
+public class Generator : Building
 {
     private bool _generating = false;
     private int _storedCrystals = 0;

@@ -120,13 +120,13 @@ public class Pathfinding
 
         Node current = _current;
         Vector3 nodePos = current.position;
-        nodePos.y = 1;
+        
         path.Add(nodePos);
 
         while (current.cameFrom != null)
         {
             nodePos = current.cameFrom.position;
-            nodePos.y = 1;
+            
             path.Add(nodePos);
             current = current.cameFrom;
         }

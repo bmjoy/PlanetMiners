@@ -10,21 +10,22 @@ public class UnitControl : MonoBehaviour
     private List<Unit> _selectedUnits = new List<Unit>();
 
     public GameObject unitPrefab;
-    private UnitSpawner unitSpawner;
+    private UnitSpawner _unitSpawner;
 
     private void Start()
     {
         EventManager.current.onSpawnUnit += spawnUnit;
         EventManager.current.onDeSpawnUnit += deSpawnUnit;
-        unitSpawner = FindObjectOfType<UnitSpawner>();
     }
 
     public void spawnUnit()
     {
-        if(unitSpawner == null)
-            unitSpawner = FindObjectOfType<UnitSpawner>();
+        if (_unitSpawner == null)
+            if (BuildingControl.current.getBuilding("UnitSpawn").TryGetComponent(out UnitSpawner unitSpawner))
+                _unitSpawner = unitSpawner;
+            else return;
 
-        GameObject u = Instantiate(unitPrefab, unitSpawner.unitSpawn, Quaternion.identity, this.transform);
+        GameObject u = Instantiate(unitPrefab, _unitSpawner.unitSpawn, Quaternion.identity, this.transform);
         u.name = "unit " + _units.Count;
         _units.Add(u.GetComponent<Unit>());
     }

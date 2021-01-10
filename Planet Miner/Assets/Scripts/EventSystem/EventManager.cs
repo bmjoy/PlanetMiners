@@ -11,7 +11,7 @@ public class EventManager : MonoBehaviour
     {
         current = this;
     }
-
+    #region unitEvents
     public event Action onSpawnUnit;
     public void spawnUnit()
     {
@@ -59,6 +59,8 @@ public class EventManager : MonoBehaviour
             onUnitDeselected();
     }
 
+    #endregion
+
     #region buildingEvents
 
     public event Action<string> onShowGhostBuilding;
@@ -100,6 +102,23 @@ public class EventManager : MonoBehaviour
     {
         if (onCancelPlaceBuilding != null)
             onCancelPlaceBuilding();
+    }
+
+    #endregion
+
+    #region resourceEvents
+    public event Action <int, int>onSpawnOre;
+
+    public void spawnOre(int x, int y)
+    {
+        onSpawnOre?.Invoke(x, y);
+    }
+
+    public event Action <int,int> onSpawnCrystal;
+
+    public void spawnCrystal(int x, int y)
+    {
+        onSpawnCrystal?.Invoke(x,y);
     }
 
     #endregion

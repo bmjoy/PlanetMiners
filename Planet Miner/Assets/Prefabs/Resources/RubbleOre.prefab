@@ -92,8 +92,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f3f7b4139f2c6d4b9dee8c3babcf8aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropResource: {fileID: 6593450107503341065, guid: 9d158a8d027160e478f84a4f4083c082,
-    type: 3}
+  dropResource: ore
   resourceDropChance: 0.3
 --- !u!65 &6233772257268387452
 BoxCollider:

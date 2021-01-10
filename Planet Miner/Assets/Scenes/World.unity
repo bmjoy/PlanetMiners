@@ -526,6 +526,7 @@ Transform:
   - {fileID: 1958907622}
   - {fileID: 2116343111}
   - {fileID: 724214168}
+  - {fileID: 533384827}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -666,7 +667,64 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0089049d81d937b4a8ac605949219303, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitPrefab: {fileID: 6127668985060176437, guid: 43be1a370c6b4e1419390caee2edabb1,
+  unitPrefab: {fileID: 5285708006111065609, guid: 7b459b20e5847e347b536f55f216a054,
+    type: 3}
+--- !u!1 &533384826
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 533384827}
+  - component: {fileID: 533384828}
+  m_Layer: 0
+  m_Name: PrefabControl
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &533384827
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 533384826}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 347117284}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &533384828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 533384826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ce9d18da55c4cd49b2acf427994583f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ground: {fileID: 7594225892198606713, guid: 13717b932ce65df4eb3fd698a944c802, type: 3}
+  wall: {fileID: 474285479570617044, guid: f71c387261872b64392786a8383d5d2c, type: 3}
+  wallCrystal: {fileID: 474285479570617044, guid: 3a38a893f2442cd4d9458a7230617089,
+    type: 3}
+  corner: {fileID: 7996783547204959933, guid: 517a2775f83d8d54caed1810333b2b54, type: 3}
+  cornerInverse: {fileID: 6255994467239245480, guid: 58f094f1dca2d2842b93d617ab974758,
+    type: 3}
+  ore: {fileID: 6593450107503341065, guid: 9d158a8d027160e478f84a4f4083c082, type: 3}
+  crystal: {fileID: 2241765237019064431, guid: fcd510ef5a163df4295bca740ca2a6a4, type: 3}
+  unitHub: {fileID: 8372656251046232889, guid: 1bfd13fea100d1648bfc2ed3322884e5, type: 3}
+  unitSpawn: {fileID: 1254659003230144734, guid: 7cb77f4eb90fd1047b5f041954b49eca,
+    type: 3}
+  generator: {fileID: 5030457151668948195, guid: 1bf8983f3cad7d547b42f13b74e0e483,
     type: 3}
 --- !u!1 &724214167
 GameObject:

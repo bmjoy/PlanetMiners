@@ -92,8 +92,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f3f7b4139f2c6d4b9dee8c3babcf8aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropResource: {fileID: 2241765237019064431, guid: fcd510ef5a163df4295bca740ca2a6a4,
-    type: 3}
+  dropResource: crystal
   resourceDropChance: 1
 --- !u!65 &1502703891946643577
 BoxCollider:
