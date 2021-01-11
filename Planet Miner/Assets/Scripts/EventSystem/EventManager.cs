@@ -104,6 +104,13 @@ public class EventManager : MonoBehaviour
             onCancelPlaceBuilding();
     }
 
+    public event Action <int,int>onResourceChanged;
+
+    public void resourceChanged(int index,int value)
+    {
+        onResourceChanged?.Invoke(index,value);
+    }
+
     #endregion
 
     #region resourceEvents

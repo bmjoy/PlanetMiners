@@ -5,6 +5,7 @@ using UnityEngine;
 public class Building : WorldBlock
 {
     protected string buildingName;
+
     private float _maxHealth = 0;
 
     protected int _powerNeed;

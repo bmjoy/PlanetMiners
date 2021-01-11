@@ -35,7 +35,7 @@ public class Inventory : MonoBehaviour
         if (_handSlot == null)
             return;
 
-        Vector3 dropPosition = transform.position;
+        Vector3 dropPosition = _handSlot.transform.position;
         dropPosition.y = 0f;
 
         _handSlot.transform.SetParent(transform.parent);

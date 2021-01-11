@@ -15,6 +15,7 @@ public class UnitHub : Building
     {
         _oresStored.Add(ore);
         Destroy(ore.gameObject);
+        EventManager.current.resourceChanged(0, _oresStored.Count);
     }
 
     public void removeOre()
@@ -23,6 +24,24 @@ public class UnitHub : Building
         {
             EventManager.current.spawnOre((int)dropPosition.position.x, (int)dropPosition.position.z);
             _oresStored.RemoveAt(0);
+            EventManager.current.resourceChanged(0, _oresStored.Count);
+        }
+    }
+
+    public void addCrystal(Crystal crystal)
+    {
+        _crystalsStored.Add(crystal);
+        Destroy(crystal.gameObject);
+        EventManager.current.resourceChanged(1, _crystalsStored.Count);
+    }
+
+    public void removeCrystal()
+    {
+        if (_crystalsStored.Count > 0)
+        {
+            EventManager.current.spawnCrystal((int)dropPosition.position.x, (int)dropPosition.position.z);
+            _crystalsStored.RemoveAt(0);
+            EventManager.current.resourceChanged(1, _crystalsStored.Count);
         }
     }
 

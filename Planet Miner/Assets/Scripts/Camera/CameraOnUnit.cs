@@ -5,6 +5,10 @@ using UnityEngine;
 public class CameraOnUnit : MonoBehaviour
 {
     Unit unit;
+    [SerializeField]
+    private float camHeight;
+    [SerializeField]
+    private float camz;
     private void Update()
     {
         if (unit == null)
@@ -14,8 +18,8 @@ public class CameraOnUnit : MonoBehaviour
         {
             Vector3 position = unit.transform.position;
 
-            position.y = 20;
-            position.z -= 5;
+            position.y = camHeight;
+            position.z -= camz;
 
             transform.position = position;
         }

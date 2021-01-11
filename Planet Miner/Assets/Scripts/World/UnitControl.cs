@@ -134,6 +134,10 @@ public class UnitControl : MonoBehaviour
                         return;
                 }
                 break;
+            case "HaulTask":
+                Building building = target.GetComponent<Building>();
+                
+                break;
         }
     }
     public bool hasUnitsSelected()

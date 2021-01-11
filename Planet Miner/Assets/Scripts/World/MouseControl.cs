@@ -128,6 +128,9 @@ public class MouseControl : MonoBehaviour
                     case "Rubble":
                         unitControl.assignTaskToSelected("DigTask", hit);
                         break;
+                    case "Building":
+                        unitControl.assignTaskToSelected("HaulTask", hit);
+                        break;
                 }
 
                 break;

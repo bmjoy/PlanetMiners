@@ -8,6 +8,8 @@ public class UIControl : MonoBehaviour
     public static UIControl uIControl;
     public GameObject sideMenus;
     private GameObject currentOpenMenu = null;
+    [SerializeField]
+    private TMPro.TextMeshProUGUI[] resourcesTexts;
 
     public Text powerGridText;
 
@@ -19,6 +21,7 @@ public class UIControl : MonoBehaviour
     private void Start()
     {
         changeSideMenu("ControlMenu");
+        EventManager.current.onResourceChanged += UpdateResourceBar;
     }
 
     public void changeSideMenu(string MenuName)
@@ -38,5 +41,10 @@ public class UIControl : MonoBehaviour
     }
 
     public void updatePowerGridText(string text) => powerGridText.text = text;
+
+    public void UpdateResourceBar(int index, int value)
+    {
+        resourcesTexts[index].text = value.ToString();
+    }
 
 }
